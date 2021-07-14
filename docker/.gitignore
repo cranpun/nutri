@@ -1,0 +1,3 @@
+os/apachelog/*
+os/data.sql
+!.env
