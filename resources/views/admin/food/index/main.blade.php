@@ -30,7 +30,7 @@
     </thead>
     <tbody>
         <?php foreach($rows as $row): $id = $row['id']; ?>
-        <tr id="row-<?= $id ?>">
+        <tr id="row-<?= $id ?>" class="{{ $row['bgcolor'] }}">
             <td id="d-ctrl-<?= $id ?>">
                 <a id="act-update-{{ $id }}" href="{{ route('admin-user-update', ['user_id' => $id]) }}" class="button is-small">編集</a>
                 <span class="delbtn">

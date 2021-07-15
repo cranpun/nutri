@@ -30,6 +30,7 @@ trait FoodTraitIndex
         $ret = [];
         foreach($rows as $row) {
             $row["nutri"] = $this->index_loadNutri($row->id);
+            $row["bgcolor"] = $this->index_favoritecolor($row->favorite);
             $ret[] = $row;
         }
         return $ret;
@@ -52,5 +53,17 @@ trait FoodTraitIndex
             $ret[$row->id] = $row->name;
         }
         return $ret;
+    }
+
+    private function index_favoritecolor($fav) 
+    {
+        $colors = [
+            0 => "has-background-primary-light",
+        ];
+        if(array_key_exists($fav, $colors)) {
+            return $colors[$fav];
+        } else {
+            return "";
+        }
     }
 }
