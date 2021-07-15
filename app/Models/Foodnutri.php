@@ -9,12 +9,12 @@ class Foodnutri extends Model
 {
     use HasFactory;
 
-    protected $table = "foodnutori";
+    protected $table = "foodnutri";
 
     static $VALIDATE = [
 
     ];
-    static $guarded = [
+    protected $guarded = [
         "id"
     ];
 }

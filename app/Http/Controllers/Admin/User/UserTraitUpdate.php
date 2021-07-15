@@ -6,7 +6,7 @@ trait UserTraitUpdate
     public function update(\Illuminate\Http\Request $request, $user_id)
     {
         $row = \App\Models\User::where("id", "=", $user_id)->first();
-        return view("admin.user.update", compact(["row"]));
+        return view("admin.user.update.main", compact(["row"]));
     }
 
     // *************************************

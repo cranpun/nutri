@@ -14,7 +14,7 @@ trait UserTraitIndex
             "user.display_name AS display_name",
         ]);
         $rows = $q->get();
-        return view("admin.user.index", compact(["rows"]));
+        return view("admin.user.index.main", compact(["rows"]));
     }
 
     // *************************************

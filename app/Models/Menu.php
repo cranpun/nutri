@@ -14,7 +14,7 @@ class Menu extends Model
     static $VALIDATE = [
 
     ];
-    static $guarded = [
+    protected $guarded = [
         "id"
     ];
 }

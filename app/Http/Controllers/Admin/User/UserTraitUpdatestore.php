@@ -3,9 +3,9 @@ namespace App\Http\Controllers\Admin\User;
 
 use Illuminate\Http\Request;
 
-trait UserTraitStore
+trait UserTraitUpdatestore
 {
-    public function store(\Illuminate\Http\Request $request)
+    public function updatestore(\Illuminate\Http\Request $request)
     {
         $data = $request->all();
         $id = array_key_exists("id", $data) ? $data["id"] : null;

@@ -13,7 +13,7 @@
 
 @section("main")
 <section class="mb-3">
-    <a id="act-create" href="{{ route('admin-user-create') }}" class="button">登録</a>
+    @include("admin.user.index.createmodal")
 </section>
 <table id="indextable" class="table is-fullwidth is-narrow is-bordered is-striped">
     <thead>
@@ -21,7 +21,7 @@
             <th>操作</th>
             <th>ID</th>
             <th>アカウント</th>
-            <th>氏名</th>
+            <th>名前</th>
         </tr>
     </thead>
     <tbody>

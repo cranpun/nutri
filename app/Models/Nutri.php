@@ -14,7 +14,7 @@ class Nutori extends Model
     static $VALIDATE = [
 
     ];
-    static $guarded = [
+    protected $guarded = [
         "id"
     ];
 }
