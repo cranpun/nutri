@@ -11,10 +11,16 @@ class Menu extends Model
 
     protected $table = "menu";
 
-    static $VALIDATE = [
-
-    ];
     protected $guarded = [
         "id"
     ];
+
+    public static function validaterule()
+    {
+        return [
+            "name" => "required|string",
+            "servedate" => "required|date",
+            "timing" => "required|in:" . join(",", array_keys((new \App\L\MenuTiming())->labels())),
+        ];
+    }
 }

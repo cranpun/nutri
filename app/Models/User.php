@@ -12,14 +12,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = "user";
-
-    static $VRULES = [
-        "name" => "required|unique:user",
-        "display_name" => "required",
-        "password"=> "required|min:8|confirmed",
-        // "email" => "required|email:rfc",
-        // "role" => "required",
-    ];
+    const roles = "admin,guest";
 
     /**
      * The attributes that are mass assignable.
@@ -48,6 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    static function validaterule() {
+        return [
+            "name" => "required|unique:user",
+            "display_name" => "required|string",
+            // "role" => "required|in:" . join(",", array_keys((new \App\L\Role())->labels())),
+            "role" => "required|in:" . self::roles,
+            // "email" => "required|email:rfc",
+            "password" => "required|min:8|confirmed",
+            "last_datetime" => "nullable|datetime",
+            "last_action" => "nullable|string",
+            "last_user_id" => "nullable|integer",
+        ];
+    }
 
     public function saveProc($data)
     {

@@ -3,7 +3,6 @@ import { BddBrowser, BddLink } from "../../../BddBrowser";
 import * as BddCommand from "../../../BddCommand";
 
 export class Create extends BddSpec {
-    private readonly contentsid:string = "#contents-admin-user-create";
     public isExport(): boolean {
         return true;
     }
@@ -15,22 +14,21 @@ export class Create extends BddSpec {
         // 画面表示
         // **********************************************************
         await browser.move([
-            new BddLink("#topnav-user", `#contents-admin-user-index #act-create`),
-            new BddLink(`#contents-admin-user-index #act-create`, `${this.contentsid} #act-submit`),
+            new BddLink("#topnav-user", `#contents-admin-user-index #act-create-open`),
+            new BddLink(`#act-create-open`, `#act-create`),
         ]);
 
         // **********************************************************
         // データ設定
         // **********************************************************
-        await browser.type(`${this.contentsid} #name`, "bdd_test_admin");
-        await browser.type(`${this.contentsid} #password`, BddCommand.env("LOGIN_PASSWORD"));
-        await browser.type(`${this.contentsid} #password_confirmation`, BddCommand.env("LOGIN_PASSWORD"));
-        await browser.type(`${this.contentsid} #display_name`, "bddテスト用管理者");
-        // await browser.type(`${this.contentsid} #email`, "test_admin@dev.dev.ll");
+        await browser.type(`#name`, "bdd_test_admin");
+        await browser.type(`#password`, BddCommand.env("LOGIN_PASSWORD"));
+        await browser.type(`#password_confirmation`, BddCommand.env("LOGIN_PASSWORD"));
+        await browser.type(`#display_name`, "bddテスト用管理者");
 
         // 保存
         await browser.move([
-            new BddLink("#act-submit", "#contents-admin-user-index"),
+            new BddLink("#act-create", `#contents-admin-user-index`),
         ]);
 
         // **********************************************************

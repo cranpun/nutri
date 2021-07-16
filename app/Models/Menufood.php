@@ -11,10 +11,15 @@ class Menufood extends Model
 
     protected $table = "menufood";
 
-    static $VALIDATE = [
-
-    ];
     protected $guarded = [
         "id"
     ];
+    public static function validaterule()
+    {
+        return [
+            "menu_id" => "required|integer",
+            "food_id" => "required|integer",
+            "amaount" => "numeric",
+        ];
+    }
 }

@@ -32,10 +32,10 @@
         <?php foreach($rows as $row): $id = $row['id']; ?>
         <tr id="row-<?= $id ?>" class="{{ $row['bgcolor'] }}">
             <td id="d-ctrl-<?= $id ?>">
-                <a id="act-update-{{ $id }}" href="{{ route('admin-user-update', ['user_id' => $id]) }}" class="button is-small">編集</a>
+                <a id="act-update-{{ $id }}" href="{{ route('admin-food-update', ['food_id' => $id]) }}" class="button is-small">編集</a>
                 <span class="delbtn">
                     <x-mydelbutton
-                        url="{{ route('admin-user-delete', ['user_id' => $id]) }}"
+                        url="{{ route('admin-food-delete', ['food_id' => $id]) }}"
                         id="{{ $id }}"
                     />
                 </span>

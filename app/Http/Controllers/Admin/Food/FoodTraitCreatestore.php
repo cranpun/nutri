@@ -25,7 +25,7 @@ trait FoodTraitCreatestore
             $row = new \App\Models\Food();
             $data = $request->all();
             $data["role"] = \App\L\Role::ID_ADMIN; // roleは固定
-            \Validator::make($data, \App\Models\Food::$VRULES);
+            \Validator::make($data, \App\Models\Food::validaterule())->validate();
         }
         if(!$row->saveProc($data)) {
             // 保存失敗

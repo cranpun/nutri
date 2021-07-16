@@ -14,7 +14,7 @@ trait UserTraitUpdatestore
             // update
             $row = \App\Models\User::where("id", "=", $id)->first();
             // ユーザ名が同じであればuniqueは外す
-            $val = \App\Models\User::$VRULES;
+            $val = \App\Models\User::validaterule();
             if($row["name"] == $data["name"]) {
                 $val["name"] = "required";
             }
@@ -25,7 +25,7 @@ trait UserTraitUpdatestore
             $row = new \App\Models\User();
             $data = $request->all();
             $data["role"] = \App\L\Role::ID_ADMIN; // roleは固定
-            \Validator::make($data, \App\Models\User::$VRULES);
+            \Validator::make($data, \App\Models\User::validaterule())->validate();
         }
         if(!$row->saveProc($data)) {
             // 保存失敗

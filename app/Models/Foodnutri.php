@@ -11,10 +11,16 @@ class Foodnutri extends Model
 
     protected $table = "foodnutri";
 
-    static $VALIDATE = [
-
-    ];
     protected $guarded = [
         "id"
     ];
+
+    public static function validaterule()
+    {
+        return [
+            "food_id" => "required|integer",
+            "nutri_id" => "required|integer",
+            "amaount" => "numeric",
+        ];
+    }
 }
