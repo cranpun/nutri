@@ -11,11 +11,11 @@ trait MenuTraitIndex
         $q->select([
             "menu.id AS id",
             "menu.name AS name",
-            "menu.favorite AS favorite",
-            "menu.category AS category",
+            "menu.servedate AS servedate",
+            "menu.timing AS timing",
         ]);
-        $q->orderBy("menu.favorite", "ASC");
-        $q->orderBy("menu.category", "ASC");
+        $q->orderBy("menu.servedate", "ASC");
+        $q->orderBy("menu.timing", "ASC");
         $raws = $q->get();
         $rows = $this->index_make($raws);
         return view("admin.menu.index.main", compact(["rows"]));
@@ -27,43 +27,49 @@ trait MenuTraitIndex
 
     private function index_make($rows)
     {
+        // servedateを補完しつつ、servedate x timingの連想配列を構成
+        // MYTODO 日付範囲。まずは前後1週間
+        $start = \Carbon\Carbon::today();
+        $start->addDay(-5);
+        $end = \Carbon\Carbon::today();
+        $end->addDay(5);
+        $period = \Carbon\CarbonPeriod::create($start, $end);
+
+        $idx = 0;
         $ret = [];
-        foreach($rows as $row) {
-            $row["nutri"] = $this->index_loadNutri($row->id);
-            $row["bgcolor"] = $this->index_favoritecolor($row->favorite);
-            $ret[] = $row;
+        foreach($period as $perioddate) {
+            // この日のデータを初期化
+            $str_perioddate = $perioddate->format("Y-m-d");
+            $ret[$str_perioddate] = [
+                \App\L\MenuTiming::ID_LUNCH => [],
+                \App\L\MenuTiming::ID_DINNER => [],
+            ];
+
+            // もうロードデータがなければ次へ。
+            if(count($rows) <= $idx) {
+                continue;
+            }
+
+            // 現在のperiodがロードデータより古ければ
+            $idxdate = $rows[$idx]->servedate;
+            $cidxdate = \Carbon\Carbon::parse($idxdate);
+            $cperioddate = \Carbon\Carbon::parse($perioddate);
+
+            while($cperioddate->eq($cidxdate)) {
+                // この日のデータ
+                $ret[$perioddate][$rows[$idx]->timing] = $rows[$idx];
+
+                // 次のロードデータへ。
+                $idx++;
+                if(count($rows) <= $idx) {
+                    // データがなければおしまい。
+                    break;
+                }
+
+                $idxdate = $rows[$idx]->servedate;
+                $cidxdate = \Carbon\Carbon::parse($idxdate);
+            }
         }
         return $ret;
-    }
-
-    private function index_loadNutri($menu_id)
-    {
-        $q = \App\Models\Menunutri::query();
-        $q->join("nutri", "nutri.id", "menunutri.nutri_id");
-        $q->where("menunutri.menu_id", "=", $menu_id);
-        $q->orderBy("nutri.pos", "ASC");
-        $q->select([
-            "nutri.id AS id",
-            "nutri.name AS name",
-        ]);
-        $rows = $q->get();
-
-        $ret = [];
-        foreach($rows as $row) {
-            $ret[$row->id] = $row->name;
-        }
-        return $ret;
-    }
-
-    private function index_favoritecolor($fav) 
-    {
-        $colors = [
-            0 => "has-background-primary-light",
-        ];
-        if(array_key_exists($fav, $colors)) {
-            return $colors[$fav];
-        } else {
-            return "";
-        }
     }
 }

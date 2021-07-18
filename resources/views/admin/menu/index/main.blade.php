@@ -22,28 +22,34 @@
     <thead>
         <tr>
             <th>操作</th>
-            <th>ID</th>
-            <th>カテゴリ</th>
-            <th>名前</th>
-            <th>栄養素</th>
+            <th>日付</th>
+            <th>昼食</th>
+            <th>夕食</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach($rows as $row): $id = $row['id']; ?>
-        <tr id="row-<?= $id ?>" class="{{ $row['bgcolor'] }}">
-            <td id="d-ctrl-<?= $id ?>">
-                <a id="act-update-{{ $id }}" href="{{ route('admin-menu-update', ['menu_id' => $id]) }}" class="button is-small">編集</a>
+        <?php foreach($rows as $date => $row): ?>
+        <tr id="row-<?= $date ?>" class="">
+            <td id="d-ctrl-<?= $date ?>">
+                <a id="act-update-{{ $date }}" href="{{ route('admin-menu-update', ['menu_id' => $date]) }}" class="button is-small">編集</a>
                 <span class="delbtn">
                     <x-mydelbutton
-                        url="{{ route('admin-menu-delete', ['menu_id' => $id]) }}"
-                        id="{{ $id }}"
+                        url="{{ route('admin-menu-delete', ['menu_id' => $date]) }}"
+                        id="{{ $date }}"
                     />
                 </span>
             </td>
-            <td id="d-id-<?= $id ?>" class="d-id val"><?= $row["id"] ?></td>
-            <td id="d-category-<?= $id ?>" class="d-category val"><?= $row["category"] ?></td>
-            <td id="d-name-<?= $id ?>" class="d-name val"><?= $row["name"] ?></td>
-            <td id="d-nutri-<?= $id ?>" class="d-nutri val"><?= join(",", $row["nutri"]) ?></td>
+            <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= $date ?></td>
+            <td id="d-lunch-<?= $date ?>" class="d-lunch">
+                <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
+                    <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
+                <?php endforeach; ?>
+            </td>
+            <td id="d-dinner-<?= $date ?>" class="d-dinner">
+                <?php foreach($row[\App\L\MenuTiming::ID_DINNER] as $menu): ?>
+                    <div id="d-dinner-menu-<?= $menu->id ?>" class="d-dinner-menu val">{{ $menu->name }}</div>
+                <?php endforeach; ?>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
