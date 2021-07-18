@@ -18,7 +18,8 @@ trait MenuTraitIndex
         $q->orderBy("menu.timing", "ASC");
         $raws = $q->get();
         $rows = $this->index_make($raws);
-        return view("admin.menu.index.main", compact(["rows"]));
+        $timing = (new \App\L\MenuTiming())->labelObjs();
+        return view("admin.menu.index.main", compact(["rows", "timing"]));
     }
 
     // *************************************

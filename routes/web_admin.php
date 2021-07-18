@@ -21,7 +21,6 @@ Route::middleware(["can:admin","auth"])->group(function () {
     // **************************************************************
     // food
     // **************************************************************
-    Route::get("/food/create", [FoodController::class, "create"])->name("admin-food-create");
     Route::post("/food/createstore", [FoodController::class, "createstore"])->name("admin-food-createstore");
     Route::post("/food/delete/{food_id}", [FoodController::class, "delete"])->name("admin-food-delete");
     Route::get("/food/index", [FoodController::class, "index"])->name("admin-food-index");
@@ -31,10 +30,9 @@ Route::middleware(["can:admin","auth"])->group(function () {
     // **************************************************************
     // menu
     // **************************************************************
-    Route::get("/menu/create", [MenuController::class, "create"])->name("admin-menu-create");
-    Route::post("/menu/createstore", [MenuController::class, "createstore"])->name("admin-menu-createstore");
+    Route::post("/menu/createstore/{servedate}", [MenuController::class, "createstore"])->name("admin-menu-createstore");
     Route::post("/menu/delete/{menu_id}", [MenuController::class, "delete"])->name("admin-menu-delete");
     Route::get("/menu/index", [MenuController::class, "index"])->name("admin-menu-index");
-    Route::get("/menu/update/{menu_id}", [MenuController::class, "update"])->name("admin-menu-update");
-    Route::post("/menu/updatestore/{menu_id}", [MenuController::class, "updatestore"])->name("admin-menu-updatestore");
+    Route::get("/menu/update/{servedate}", [MenuController::class, "update"])->name("admin-menu-update");
+    Route::post("/menu/updatestore/{servedate}", [MenuController::class, "updatestore"])->name("admin-menu-updatestore");
 });

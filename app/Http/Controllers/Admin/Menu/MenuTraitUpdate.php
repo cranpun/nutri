@@ -3,29 +3,38 @@ namespace App\Http\Controllers\Admin\Menu;
 
 trait MenuTraitUpdate
 {
-    public function update(\Illuminate\Http\Request $request, $menu_id)
+    public function update(\Illuminate\Http\Request $request, $servedate)
     {
-        $row = \App\Models\Menu::where("id", "=", $menu_id)->first();
-        $nutris = \App\Models\Nutri::loadAll();
-        $menunutris = $this->update_loadNutri($menu_id);
-        return view("admin.menu.update.main", compact(["row", "nutris", "menunutris"]));
+        $menumax = 5;
+        $rows = $this->update_loadMenus($servedate, $menumax);
+        return view("admin.menu.update.main", compact(["rows", "servedate"]));
     }
 
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function update_loadNutri($menu_id)
+    private function update_loadMenus($servedate, $menumax)
     {
-        $q = \App\Models\Menunutri::query();
-        $q->where("menunutri.menu_id", "=", $menu_id);
+        // 昼食と夕食
+        $q = \App\Models\Menu::query();
+        $q->where("menu.servedate", "=", $servedate);
         $q->select([
-            "menunutri.nutri_id AS id",
+            "menu.name AS name",
         ]);
-        $rows = $q->get();
 
+        $timings = [
+            \App\L\MenuTiming::ID_LUNCH,
+            \App\L\MenuTiming::ID_DINNER
+        ];
         $ret = [];
-        foreach($rows as $row) {
-            $ret[] = $row->id;
+        foreach($timings as $timing) {
+            $tq = clone $q;
+            $rows = $tq->get();
+
+            // 最大数まで補完
+            for($i = 0; $i < $menumax; $i++) {
+                $ret[$timing][] = count($rows) > $i ? $rows[$i] : ["name" => ""];
+            }
         }
         return $ret;
     }
