@@ -1,9 +1,9 @@
 <?php
-namespace App\Http\Controllers\Admin\User;
+namespace App\Http\Controllers\Admin\Menu;
 
 use Illuminate\Http\Request;
 
-trait UserTraitStore
+trait MenuTraitCreatestore
 {
     public function store(\Illuminate\Http\Request $request)
     {
@@ -12,9 +12,9 @@ trait UserTraitStore
 
         if($id) {
             // update
-            $row = \App\Models\User::where("id", "=", $id)->first();
+            $row = \App\Models\Menu::where("id", "=", $id)->first();
             // ユーザ名が同じであればuniqueは外す
-            $val = \App\Models\User::validaterule();
+            $val = \App\Models\Menu::$VRULES;
             if($row["name"] == $data["name"]) {
                 $val["name"] = "required";
             }
@@ -22,16 +22,16 @@ trait UserTraitStore
             unset($val["role"]);
             $request->validate($val);
         } else {
-            $row = new \App\Models\User();
+            $row = new \App\Models\Menu();
             $data = $request->all();
             $data["role"] = \App\L\Role::ID_ADMIN; // roleは固定
-            \Validator::make($data, \App\Models\User::validaterule())->validate();
+            \Validator::make($data, \App\Models\Menu::validaterule())->validate();
         }
         if(!$row->saveProc($data)) {
             // 保存失敗
             \U::invokeErrorValidate($request, "更新に失敗しました。");
         }
-        return redirect()->route("admin-user-index")->with("message-success", "更新しました。");
+        return redirect()->route("admin-Menu-index")->with("message-success", "更新しました。");
     }
 
     // *************************************

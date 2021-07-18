@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\User\UserController;
 use \App\Http\Controllers\Admin\Food\FoodController;
+use \App\Http\Controllers\Admin\Menu\MenuController;
 
 Route::middleware(["can:admin","auth"])->group(function () {
     Route::get("/", [UserController::class, "index"])->name("top"); // MYTODO 生徒一覧ができればそれに変更。
@@ -26,4 +27,14 @@ Route::middleware(["can:admin","auth"])->group(function () {
     Route::get("/food/index", [FoodController::class, "index"])->name("admin-food-index");
     Route::get("/food/update/{food_id}", [FoodController::class, "update"])->name("admin-food-update");
     Route::post("/food/updatestore/{food_id}", [FoodController::class, "updatestore"])->name("admin-food-updatestore");
+
+    // **************************************************************
+    // menu
+    // **************************************************************
+    Route::get("/menu/create", [MenuController::class, "create"])->name("admin-menu-create");
+    Route::post("/menu/createstore", [MenuController::class, "createstore"])->name("admin-menu-createstore");
+    Route::post("/menu/delete/{menu_id}", [MenuController::class, "delete"])->name("admin-menu-delete");
+    Route::get("/menu/index", [MenuController::class, "index"])->name("admin-menu-index");
+    Route::get("/menu/update/{menu_id}", [MenuController::class, "update"])->name("admin-menu-update");
+    Route::post("/menu/updatestore/{menu_id}", [MenuController::class, "updatestore"])->name("admin-menu-updatestore");
 });

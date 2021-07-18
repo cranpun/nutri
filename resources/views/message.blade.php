@@ -1,6 +1,9 @@
 <section id="message-group" class="section py-0">
     @if (session('message-error'))
-    <div id="message-error" class='notification is-danger is-light mt-2'>{{ session("message-error") }}</div>
+    <div id="message-error" class='notification is-danger is-light mt-2'>
+        {{ session("message-error") }}
+        <?php print_r($errors->all()); ?>
+    </div>
     @endif
     @if (session('message-success'))
     <div id="message-success" class='notification is-success is-light mt-2'>{{ session("message-success") }}</div>

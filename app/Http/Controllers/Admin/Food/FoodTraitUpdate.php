@@ -8,7 +8,8 @@ trait FoodTraitUpdate
         $row = \App\Models\Food::where("id", "=", $food_id)->first();
         $nutris = \App\Models\Nutri::loadAll();
         $foodnutris = $this->update_loadNutri($food_id);
-        return view("admin.food.update.main", compact(["row", "nutris", "foodnutris"]));
+        $category = (new \App\L\FoodCategory())->labelObjs();
+        return view("admin.food.update.main", compact(["row", "nutris", "category", "foodnutris"]));
     }
 
     // *************************************

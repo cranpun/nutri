@@ -45,7 +45,11 @@
                         <span class="material-icons">manage_accounts</span>
                         <span>ユーザ</span>
                     </a>
-                    <a id="topnav-user" class="navbar-item" href="{{ route('admin-food-index') }}">
+                    <a id="topnav-menu" class="navbar-item" href="{{ route('admin-menu-index') }}">
+                        <span class="material-icons">restaurant_menu</span>
+                        <span>献立</span>
+                    </a>
+                    <a id="topnav-food" class="navbar-item" href="{{ route('admin-food-index') }}">
                         <span class="material-icons">savings</span>
                         <span>食材</span>
                     </a>

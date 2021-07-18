@@ -10,7 +10,6 @@ class Food extends Model
     use HasFactory;
 
     protected $table = "food";
-    const categories = "vegetable,meat,seafood,grain(穀物),seasoning（調味料）,etc";
 
     protected $guarded = [
         "id"
@@ -20,8 +19,7 @@ class Food extends Model
     {
         return [
             "name" => "required|string",
-            // "category" => "required|in:" . join(",", array_keys((new \App\L\FoodCategory())->labels())),
-            "category" => "required|in:" . self::categories,
+            "category" => "required|in:" . join(",", array_keys((new \App\L\FoodCategory())->labels())),
             "favorite" => "required|in:0,100",
         ];
     }

@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Controllers\Admin\User;
+namespace App\Http\Controllers\Admin\Menu;
 
 use Illuminate\Http\Request;
 
-trait UserTraitDelete
+trait MenuTraitDelete
 {
-    public function delete(Request $request, $user_id)
+    public function delete(Request $request, $Menu_id)
     {
-        $row = \App\Models\User::find($user_id);
+        $row = \App\Models\Menu::find($Menu_id);
 
         // ユーザ削除はactiveをoffに。
         if(!$row->delete()) {
@@ -15,7 +15,7 @@ trait UserTraitDelete
             \U::invokeErrorValidate($request, "削除に失敗しました。");
         }
         // それぞれのroleに応じた一覧へ移動。
-        return redirect()->route("admin-user-index")->with("message-success", "削除しました。");
+        return redirect()->route("admin-Menu-index")->with("message-success", "削除しました。");
     }
 
     // *************************************

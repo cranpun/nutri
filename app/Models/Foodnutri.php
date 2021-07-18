@@ -18,8 +18,8 @@ class Foodnutri extends Model
     public static function validaterule()
     {
         return [
-            "food_id" => "required|integer",
-            "nutri_id" => "required|integer",
+            "food_id" => "required|numeric",
+            "nutri_id" => "required|numeric",
             "amaount" => "numeric",
         ];
     }
