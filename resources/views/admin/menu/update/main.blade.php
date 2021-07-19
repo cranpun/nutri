@@ -20,12 +20,25 @@
         <thead>
             <tr>
                 <th>食材</th>
-                <?php foreach($rows[\App\L\MenuTiming::ID_LUNCH] as $idx => $row) : ?>
+                <?php foreach($rows as $idx => $row) : ?>
                 <td id="d-{{ $idx }}" class="d-name">
                     <input type="text" name="name[{{$idx}}]" id="name_{{$idx}}" value='{{ old("name[{$idx}]", $row["name"]) }}'>
                 </td>
                 <?php endforeach; ?>
+            </tr>
         </thead>
+        <tbody>
+            <?php foreach($foods as $food) : ?>
+            <tr class="{{ $food->bgcolor }}">
+                <th>{{ $food->name }}</th>
+                <?php foreach($rows as $idx => $row) : ?>
+                    <td id="d-menufood-{{ $food->id }}" class="d-menufood has-text-centered">
+                        <input type="checkbox" name='{{ "menufood[{$idx}][{$food->id}]" }}' id='{{ "menufood_{$idx}_{$food->id}" }}' {{ $menufoods[$idx][$food->id] ? " checked " : "" }} >
+                    </td>
+                <?php endforeach; ?>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 
     <div class="field">
