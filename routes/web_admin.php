@@ -5,7 +5,7 @@ use \App\Http\Controllers\Admin\Food\FoodController;
 use \App\Http\Controllers\Admin\Menu\MenuController;
 
 Route::middleware(["can:admin","auth"])->group(function () {
-    Route::get("/", [UserController::class, "index"])->name("top"); // MYTODO 生徒一覧ができればそれに変更。
+    Route::get("/", [MenuController::class, "index"])->name("top"); // MYTODO 生徒一覧ができればそれに変更。
 
     // **************************************************************
     // user
