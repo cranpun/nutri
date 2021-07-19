@@ -26,7 +26,7 @@ trait FoodTraitCreatestore
             // 保存失敗
             \U::invokeErrorValidate($request, "更新に失敗しました。");
         }
-        return redirect()->route("admin-food-index")->with("message-success", "更新しました。");
+        return redirect()->route("admin-food-update", ["food_id" => $row->id])->with("message-success", "更新しました。続けて他の情報を登録してください。");
     }
 
     // *************************************
