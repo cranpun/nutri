@@ -231,7 +231,6 @@ return [
 
         // for this system
         'U' => App\U\U::class,
-        'DBResult' => App\U\DBResult::class,
         "User" => App\Models\User::class,
     ],
 ];

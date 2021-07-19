@@ -13,7 +13,8 @@
 
 @section("main")
 <section class="mb-3">
-    <a class="button" id="act-create" href="{{ route('admin-menu-update', ['servedate' => \Carbon\Carbon::today()->format('Y-m-d')]) }}">登録</a>
+    <a class="button" id="act-create-lunch" href="{{ route('admin-menu-update', ['servedate' => \Carbon\Carbon::today()->format('Y-m-d'), 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}">昼食登録</a>
+    <a class="button" id="act-create-dinner" href="{{ route('admin-menu-update', ['servedate' => \Carbon\Carbon::today()->format('Y-m-d'), 'timing' => \App\L\MenuTiming::ID_DINNER]) }}">夕食登録</a>
 </section>
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>

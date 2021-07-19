@@ -2,51 +2,33 @@
 
 namespace App\Http\Controllers\Admin\Menu;
 
-use App\U\DBResult;
 use Illuminate\Http\Request;
 
 trait MenuTraitUpdatestore
 {
-    public function updatestore(\Illuminate\Http\Request $request, $menu_id)
+    public function updatestore(\Illuminate\Http\Request $request, $servedate, $timing)
     {
         // 複数回の変更があるためtransaction
-        $trans = \DB::transaction(function () use ($request, $menu_id) {
+        $trans = \DB::transaction(function () use ($request, $servedate, $timing) {
             $data = $request->all();
-            $name = array_key_exists("name", $data) ? $data["name"] : null;
-            $nutri_ids = array_key_exists("nutri_ids", $data) ? $data["nutri_ids"] : null;
+            $names = array_key_exists("name", $data) ? $data["name"] : [];
+            $food_ids = array_key_exists("food_id", $data) ? $data["food_id"] : [];
 
-            // 一旦栄養素を全て削除。
-            if(\App\Models\Menunutri::where("menu_id", "=", $menu_id)->delete()) {
-                return new \App\U\DBResult(false, "以前の栄養素関連付けのクリアに失敗しました。");
-            }
-
-            // 栄養素がポストされていれば保存
-            if ($nutri_ids && count($nutri_ids) > 0) {
-                $resfn = $this->updatestore_storeMenunutri($request, $menu_id, $nutri_ids);
-                if($resfn->error()) {
-                    return $resfn;
-                }
-            }
-
-            // 入力値の検証
-            $data["amount"] = 0; // amountは未使用なので自動設定。
+            // 日付とタイミングの検証
             $val = \App\Models\Menu::validaterule();
-            \Validator::make($data, $val)->validate();
+            $val_common = [
+                "servedate" => $val["servedate"],
+                "timing" => $val["timing"]
+            ];
+            \Validator::make(compact(["servedate", "timing"]), $val_common)->validate();
 
-            $row = \App\Models\Menu::where("id", "=", $menu_id)->first();
-            $row->name = $name;
+            $menu_ids = $this->updatestore_procMenu($servedate, $timing, $names);
+            $this->updatestore_procMenufood($menu_ids, $food_ids);
 
-            // 食材の保存
-            if (!$row->save()) {
-                // 保存失敗
-                return new \App\U\DBResult(false, "食材データの保存に失敗しました。");
-            }
-
-            // 全部正常
-            return new \App\U\DBResult(true, "");
+            return true;
         });
 
-        if ($trans->success()) {
+        if ($trans) {
             return redirect()->route("admin-menu-index")->with("message-success", "更新しました。");
         } else {
             \U::invokeErrorValidate($request, "保存に失敗しました。{$trans->message()}");
@@ -56,23 +38,67 @@ trait MenuTraitUpdatestore
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function updatestore_storeMenunutri($request, $menu_id, $nutri_ids) : \App\U\DBResult
+    private function updatestore_procMenu($servedate, $timing, $names) : array
     {
-        foreach ($nutri_ids as $nutri_id) {
-            $ent = new \App\Models\Menunutri();
-            $ent->menu_id = $menu_id;
-            $ent->nutri_id = $nutri_id;
-            $ent->amount = 0; // 未使用なので自動設定。
-
-            $val = \App\Models\Menunutri::validaterule();
-            \Validator::make($ent, $val)->validate();
-            if (!$ent->save()) {
-                return new \App\U\DBResult(false, "栄養素との関連付けに失敗しました。");
-            }
+        // まずは該当するメニューを保持。menufoodクリアのため。
+        $q_old = \App\Models\Menu::query();
+        $q_old->where("servedate", "=", $servedate);
+        $q_old->where("timing", "=", $timing);
+        $rows_old = $q_old->get();
+        $oldids = [];
+        foreach($rows_old as $row) {
+            $oldids[] = $row->id;
         }
 
-        // 全部正常に保存
-        return new \App\U\DBResult(true, "");
+        // 新しく保存
+        $newids = [];
+        $val = \App\Models\Menu::validaterule();
+        // servedateとtimingは呼び出し元で検証済み
+        $val_now = [
+            "name" => $val["name"],
+        ];
+        foreach($names as $idx => $name) {
+            $ent = new \App\Models\Menu();
+            // amountは未使用なので0固定。
+            \validator::make(["name" => $name, "amount" => 0], $val_now)->validate();
+            $ent->name = $name;
+            $ent->servedate = $servedate;
+            $ent->timing = $timing;
+            $ent->save();
+            $newids[] = $ent->id;
+        }
 
+        return compact(["newids", "oldids"]);
     }
+
+    private function updatestore_procMenufood($menu_ids, $food_ids)
+    {
+        // MYTODO まずはmenu_ids["oldids"]に従って古いfoodmenuを削除
+
+        // MYTODO 新しいmenu_ids["newids"]に従って新しいfoodmenuを登録。food_idsはuiのidx配列で保存されているのでそれを踏まえること。
+    }
+
+    // private function updatestore_storeMenunutri($request, $menu_id, $nutri_ids) : \App\U\DBResult
+    // {
+    //     foreach ($nutri_ids as $nutri_id) {
+    //         $ent = new \App\Models\Menunutri();
+    //         $ent->menu_id = $menu_id;
+    //         $ent->nutri_id = $nutri_id;
+    //         $ent->amount = 0; // 未使用なので自動設定。
+
+    //         $val = \App\Models\Menunutri::validaterule();
+    //         \Validator::make($ent, $val)->validate();
+    //         if (!$ent->save()) {
+    //             return new \App\U\DBResult(false, "栄養素との関連付けに失敗しました。");
+    //         }
+    //     }
+
+    //     // 全部正常に保存
+    //     return new \App\U\DBResult(true, "");
+    // }
+
+    // private function updatestore_procMenufood($menu_id)
+    // {
+
+    // }
 }

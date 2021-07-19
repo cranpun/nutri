@@ -12,7 +12,6 @@ class MenuController extends \App\Http\Controllers\Controller
     // *********************************************************
     // action
     // *********************************************************
-    use \App\Http\Controllers\Admin\Menu\MenuTraitCreatestore;
     use \App\Http\Controllers\Admin\Menu\MenuTraitDelete;
     use \App\Http\Controllers\Admin\Menu\MenuTraitIndex;
     use \App\Http\Controllers\Admin\Menu\MenuTraitUpdate;

@@ -2,8 +2,8 @@
     @if (session('message-error'))
     <div id="message-error" class='notification is-danger is-light mt-2'>
         {{ session("message-error") }}
-        <?php print_r($errors->all()); ?>
     </div>
+    <?php print_r($errors->all()); ?>
     @endif
     @if (session('message-success'))
     <div id="message-success" class='notification is-success is-light mt-2'>{{ session("message-success") }}</div>

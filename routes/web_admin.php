@@ -33,6 +33,6 @@ Route::middleware(["can:admin","auth"])->group(function () {
     Route::post("/menu/createstore/{servedate}", [MenuController::class, "createstore"])->name("admin-menu-createstore");
     Route::post("/menu/delete/{menu_id}", [MenuController::class, "delete"])->name("admin-menu-delete");
     Route::get("/menu/index", [MenuController::class, "index"])->name("admin-menu-index");
-    Route::get("/menu/update/{servedate}", [MenuController::class, "update"])->name("admin-menu-update");
-    Route::post("/menu/updatestore/{servedate}", [MenuController::class, "updatestore"])->name("admin-menu-updatestore");
+    Route::get("/menu/update/{servedate}/{timing}", [MenuController::class, "update"])->name("admin-menu-update");
+    Route::post("/menu/updatestore/{servedate}/{timing}", [MenuController::class, "updatestore"])->name("admin-menu-updatestore");
 });

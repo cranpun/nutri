@@ -51,14 +51,11 @@ trait MenuTraitIndex
                 continue;
             }
 
-            // 現在のperiodがロードデータより古ければ
-            $idxdate = $rows[$idx]->servedate;
-            $cidxdate = \Carbon\Carbon::parse($idxdate);
-            $cperioddate = \Carbon\Carbon::parse($perioddate);
+            $str_perioddate = $perioddate->format("Y-m-d");
 
-            while($cperioddate->eq($cidxdate)) {
+            while($str_perioddate == $rows[$idx]->servedate) {
                 // この日のデータ
-                $ret[$perioddate][$rows[$idx]->timing] = $rows[$idx];
+                $ret[$str_perioddate][$rows[$idx]->timing][] = $rows[$idx];
 
                 // 次のロードデータへ。
                 $idx++;
@@ -66,9 +63,6 @@ trait MenuTraitIndex
                     // データがなければおしまい。
                     break;
                 }
-
-                $idxdate = $rows[$idx]->servedate;
-                $cidxdate = \Carbon\Carbon::parse($idxdate);
             }
         }
         return $ret;

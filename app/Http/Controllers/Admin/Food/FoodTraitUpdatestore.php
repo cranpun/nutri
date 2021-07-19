@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Food;
 
-use App\U\DBResult;
 use Illuminate\Http\Request;
 
 trait FoodTraitUpdatestore
