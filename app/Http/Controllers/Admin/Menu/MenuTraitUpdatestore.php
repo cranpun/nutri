@@ -61,14 +61,16 @@ trait MenuTraitUpdatestore
             "name" => $val["name"],
         ];
         foreach($names as $idx => $name) {
-            $ent = new \App\Models\Menu();
-            // amountは未使用なので0固定。
-            \validator::make(["name" => $name, "amount" => 0], $val_now)->validate();
-            $ent->name = $name;
-            $ent->servedate = $servedate;
-            $ent->timing = $timing;
-            $ent->save();
-            $newids[] = $ent->id;
+            if($name && strlen($name) > 0) {
+                $ent = new \App\Models\Menu();
+                // amountは未使用なので0固定。
+                \validator::make(["name" => $name], $val_now)->validate();
+                $ent->name = $name;
+                $ent->servedate = $servedate;
+                $ent->timing = $timing;
+                $ent->save();
+                $newids[] = $ent->id;
+            }
         }
 
         return compact(["newids", "oldids"]);
