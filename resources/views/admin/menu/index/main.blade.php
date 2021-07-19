@@ -12,14 +12,6 @@
 @endsection
 
 @section("main")
-<section class="mb-3">
-    <!-- 
-    <a class="button" id="act-create-lunch" href="{{ route('admin-menu-update', ['servedate' => \Carbon\Carbon::today()->format('Y-m-d'), 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}">昼食登録</a>
-    <a class="button" id="act-create-dinner" href="{{ route('admin-menu-update', ['servedate' => \Carbon\Carbon::today()->format('Y-m-d'), 'timing' => \App\L\MenuTiming::ID_DINNER]) }}">夕食登録</a>
--->
-    @include("admin.menu.index.createmodal", ["timing" => \App\L\MenuTiming::ID_LUNCH])
-    @include("admin.menu.index.createmodal", ["timing" => \App\L\MenuTiming::ID_DINNER])
-</section>
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
 </div>
@@ -39,11 +31,13 @@
                 <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
                     <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
                 <?php endforeach; ?>
+                <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}" class="button is-small">編集</a>
             </td>
             <td id="d-dinner-<?= $date ?>" class="d-dinner">
                 <?php foreach($row[\App\L\MenuTiming::ID_DINNER] as $menu): ?>
                     <div id="d-dinner-menu-<?= $menu->id ?>" class="d-dinner-menu val">{{ $menu->name }}</div>
                 <?php endforeach; ?>
+                <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER]) }}" class="button is-small">編集</a>
             </td>
         </tr>
         <?php endforeach; ?>
