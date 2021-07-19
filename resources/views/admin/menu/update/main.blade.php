@@ -16,7 +16,7 @@
 @section("main")
 <section class="container">
     <h4>不足栄養素</h4>
-    @include("admin.menu.update.tags", ["tags" => $lacknutris])
+    @include("admin.menu.update.lacknutris", ["lacknutris" => $lacknutris])
     <hr />
 </section>
 <form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing'])) }}">

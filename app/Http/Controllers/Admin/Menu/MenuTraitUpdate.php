@@ -117,10 +117,15 @@ trait MenuTraitUpdate
         $lq = \App\Models\Nutri::query();
         $lq->whereNotIn("nutri.id", $nids);
         $lq->select([
+            "nutri.id AS id",
             "nutri.name AS name",
         ]);
         $lrows = $lq->get()->toArray();
-        $lacknutris = array_column($lrows, "name");
+        $lacknutris = [];
+        foreach($lrows as $lrow) {
+            $lrow["foods"] = $this->update_loadNutrifood($lrow["id"]);
+            $lacknutris[] = $lrow;
+        }
 
         // 指定された栄養素以外を含む食材の名前
         $fq = \App\Models\Foodnutri::query();
@@ -134,5 +139,18 @@ trait MenuTraitUpdate
         $frows = $fq->get()->toArray();
         $recomandfoods = array_column($frows, "id");
         return compact(["lacknutris", "recomandfoods"]);
+    }
+
+    private function update_loadNutrifood($nutri_id)
+    {
+        $q = \App\Models\Foodnutri::query();
+        $q->join("food", "food.id", "=", "foodnutri.food_id");
+        $q->where("foodnutri.nutri_id", "=", $nutri_id);
+        $q->select([
+            "food.id AS id",
+            "food.name AS name"
+        ]);
+        $ret = $q->get();
+        return $ret;
     }
 }
