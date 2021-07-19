@@ -1,0 +1,50 @@
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.fadein {
+    animation-name: fadein;
+    animation-duration: 500ms;
+    animation-timing-function: ease;
+}
+
+fieldset {
+    border: none;
+}
+* {
+    font-family: Kosugi Maru,sans-serif;
+}
+.d-none {
+    display: none;
+}
+.d-block {
+    display: block;
+}
+.d-inline {
+    display: inline;
+}
+.d-inline-block {
+    display: inline-block;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.table-fixed {
+    table-layout: fixed;
+}

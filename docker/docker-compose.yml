@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nutri:
+    build: ./os
+    image: nutri
+    container_name: nutri
+    volumes:
+      - ..:/var/www/html
+      - /var/www/html/vendor
+      - /var/www/html/.git
+      - /var/www/html/node_modules
+      - /var/www/html/bootstrap/cache
+      - /var/www/html/storage
+    ports:
+      - '80:80'
+      - '443:443'
+    privileged: true
+
+## for db permanent
+#volumes:
+#    db_data:
