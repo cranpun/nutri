@@ -7,7 +7,7 @@ $posturl = route('admin-user-createstore');
 ?>
  <section class="mb-3">
     <a class="button" id="act-{{ $modalaction }}-open" onclick="document.querySelector('#modal-{{ $modalaction }}').classList.add('is-active');">登録</a>
-    <div id="modal-create" class="modal">
+    <div id="modal-{{ $modalaction }}" class="modal">
         <div class="modal-background" onclick="document.querySelector('#modal-{{ $modalaction }}').classList.remove('is-active')"></div>
         <div class="modal-content">
             <div class="box">

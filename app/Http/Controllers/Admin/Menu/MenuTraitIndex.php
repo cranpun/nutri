@@ -7,6 +7,29 @@ trait MenuTraitIndex
 {
     public function index(Request $request)
     {
+        $NAME_START = "startdate";
+        $NAME_END = "enddate";
+        $srch = $this->index_srch($request, $NAME_START, $NAME_END);
+        $rows = $this->index_load($srch, $NAME_START, $NAME_END);
+        $timing = (new \App\L\MenuTiming())->labelObjs();
+        return view("admin.menu.index.main", compact(["rows", "timing", "srch", "NAME_START", "NAME_END"]));
+    }
+
+    // *************************************
+    // utils : 衝突を避けるため、action名_メソッド名とすること
+    // *************************************
+
+    private function index_srch($request, $NAME_START, $NAME_END)
+    {
+        $srch = [
+            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDay(-7)->format("Y-m-d")),
+            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDay(7)->format("Y-m-d")),
+        ];
+        return $srch;
+    }
+
+    private function index_load($srch, $NAME_START, $NAME_END)
+    {
         $q = \App\Models\Menu::query();
         $q->select([
             "menu.id AS id",
@@ -14,27 +37,19 @@ trait MenuTraitIndex
             "menu.servedate AS servedate",
             "menu.timing AS timing",
         ]);
+        $q->whereBetween("servedate", [$srch[$NAME_START], $srch[$NAME_END]]);
         $q->orderBy("menu.servedate", "ASC");
         $q->orderBy("menu.timing", "ASC");
         $raws = $q->get();
-        $rows = $this->index_make($raws);
-        $timing = (new \App\L\MenuTiming())->labelObjs();
-        return view("admin.menu.index.main", compact(["rows", "timing"]));
+        $rows = $this->index_make($raws, $srch, $NAME_START, $NAME_END);
+        return $rows;
     }
 
-    // *************************************
-    // utils : 衝突を避けるため、action名_メソッド名とすること
-    // *************************************
-
-    private function index_make($rows)
+    private function index_make($rows, $srch, $NAME_START, $NAME_END)
     {
         // servedateを補完しつつ、servedate x timingの連想配列を構成
         // MYTODO 日付範囲。まずは前後1週間
-        $start = \Carbon\Carbon::today();
-        $start->addDay(-5);
-        $end = \Carbon\Carbon::today();
-        $end->addDay(5);
-        $period = \Carbon\CarbonPeriod::create($start, $end);
+        $period = \Carbon\CarbonPeriod::create($srch[$NAME_START], $srch[$NAME_END]);
 
         $idx = 0;
         $ret = [];

@@ -5,13 +5,21 @@
 @endsection
 
 @section("labeltitle")
-献立一覧
+<div>献立一覧</div>
+<div class="is-size-5">
+    <span id="srch-label-startday">{{ $srch[$NAME_START] }}</span>
+    <span>～</span>
+    <span id="srch-label-endday">{{ $srch[$NAME_END] }}</span>
+</div>
 @endsection
 
 @section("labelsubtitle")
 @endsection
 
 @section("main")
+<div>
+    @include("admin.menu.index.filter", compact(["NAME_START", "NAME_END"]))
+</div>
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
 </div>
@@ -26,7 +34,7 @@
     <tbody>
         <?php foreach($rows as $date => $row): ?>
         <tr id="row-<?= $date ?>" class="">
-            <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= $date ?></td>
+            <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
                 <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
                     <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
