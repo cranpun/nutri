@@ -1,21 +1,26 @@
 @extends("admin.base")
 
 @section("title")
-献立編集
+献立
 @endsection
 
 @section("labeltitle")
-献立編集
+献立
 @endsection
 
 @section("labelsubtitle")
+<span id='label-servedate'>{{  \Carbon\Carbon::parse($servedate)->format("m/d(D)") }}</span>
+<span id="label-timing">{{ (new \App\L\MenuTiming())->label($timing) }}</span>
 @endsection
 
 @section("main")
+<section class="container">
+    <h4>不足栄養素</h4>
+    @include("admin.menu.update.tags", ["tags" => $lacknutris])
+    <hr />
+</section>
 <form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing'])) }}">
     @csrf
-    <x-myinput field="servedate" label="日にち" type="date" :defval="old('servedate', $servedate)" placeholder="" />
-    <h4 class="is-size-3">{{ (new \App\L\MenuTiming())->label($timing) }}</h4>
     <table id="lunchtable" class="table is-fullwidth is-narrow is-bordered is-striped">
         <thead>
             <tr>
@@ -30,7 +35,7 @@
         <tbody>
             <?php foreach($foods as $food) : ?>
             <tr class="{{ $food->bgcolor }}">
-                <th>{{ $food->name }}</th>
+                <th class="nowrap">{{ in_array($food->id, $recomandfoods) ? "★" : "　"  }}{{ $food->name }}</th>
                 <?php foreach($rows as $idx => $row) : ?>
                     <td id="d-menufood-{{ $food->id }}" class="d-menufood has-text-centered">
                         <input type="checkbox" name='{{ "menufood[{$idx}][{$food->id}]" }}' id='{{ "menufood_{$idx}_{$food->id}" }}' {{ $menufoods[$idx][$food->id] ? " checked " : "" }} >
