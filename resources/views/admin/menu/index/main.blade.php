@@ -23,10 +23,10 @@
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
 </div>
-<table id="indextable" class="table is-fullwidth is-narrow is-bordered is-striped">
+<table id="indextable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed;">
     <thead>
         <tr>
-            <th>日付</th>
+            <th style="width: 100px;">日付</th>
             <th>昼食</th>
             <th>夕食</th>
         </tr>
@@ -36,24 +36,32 @@
         <tr id="row-<?= $date ?>" class="">
             <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
-                <div>
-                    <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}" class="button is-small">編集</a>
-                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'up'])
-                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'down'])
-                </div>
-                <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
-                    <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
-                <?php endforeach; ?>
+                <div class="columns is-mobile">
+                    <div class="column is-10">
+                        <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
+                            <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="column">
+                        <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}" class="button is-small">編集</a>
+                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'up'])
+                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'down'])
+                    </div>
+                <?div>
             </td>
             <td id="d-dinner-<?= $date ?>" class="d-dinner">
-                <div>
-                    <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER]) }}" class="button is-small">編集</a>
-                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'up'])
-                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'down'])
+                <div class="columns is-mobile">
+                    <div class="column is-10">
+                        <?php foreach($row[\App\L\MenuTiming::ID_DINNER] as $menu): ?>
+                            <div id="d-dinner-menu-<?= $menu->id ?>" class="d-dinner-menu val">{{ $menu->name }}</div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="column">
+                        <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER]) }}" class="button is-small">編集</a>
+                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'up'])
+                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'down'])
+                    </div>
                 </div>
-                <?php foreach($row[\App\L\MenuTiming::ID_DINNER] as $menu): ?>
-                    <div id="d-dinner-menu-<?= $menu->id ?>" class="d-dinner-menu val">{{ $menu->name }}</div>
-                <?php endforeach; ?>
             </td>
         </tr>
         <?php endforeach; ?>

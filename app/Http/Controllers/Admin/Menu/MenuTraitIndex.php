@@ -21,9 +21,10 @@ trait MenuTraitIndex
 
     private function index_srch($request, $NAME_START, $NAME_END)
     {
+        $range = 15;
         $srch = [
-            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDay(-7)->format("Y-m-d")),
-            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDay(7)->format("Y-m-d")),
+            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDay($range * -1)->format("Y-m-d")),
+            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDay($range * 1)->format("Y-m-d")),
         ];
         return $srch;
     }
