@@ -20,6 +20,41 @@
 <div>
     @include("admin.menu.index.filter", compact(["NAME_START", "NAME_END"]))
 </div>
+
+
+<?php
+$today = \Carbon\Carbon::today()->format("Y-m-d");
+?>
+<h4 class="is-size-4">本日（{{ $today }}）の献立</h4>
+<table id="indextable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed;">
+    <thead>
+        <tr>
+            <th>昼食</th>
+            <th>夕食</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="row-today" class="">
+            <td id="d-lunch-today" class="d-lunch">
+                <ul>
+                <?php foreach($rows[$today][\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
+                    <li id="d-lunch-today-menu-{{ $menu->id }}">{{ $menu->name }}</li>
+                <?php endforeach; ?>
+                </ul>
+            </td>
+            <td id="d-dinner-today" class="d-dinner">
+            <ul>
+                <?php foreach($rows[$today][\App\L\MenuTiming::ID_DINNER] as $menu): ?>
+                    <li id="d-lunch-today-menu-{{ $menu->id }}">{{ $menu->name }}</li>
+                <?php endforeach; ?>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
 </div>
@@ -33,35 +68,13 @@
     </thead>
     <tbody>
         <?php foreach($rows as $date => $row): ?>
-        <tr id="row-<?= $date ?>" class="">
+        <tr id="row-<?= $date ?>" class="{{ $date == $today ? 'has-background-primary-light' : '' }}">
             <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
-                <div class="columns">
-                    <div class="column is-10">
-                        <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
-                            <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="column">
-                        <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}" class="button is-small">編集</a>
-                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'up'])
-                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'down'])
-                    </div>
-                <?div>
+                @include("admin.menu.index.item", ["servedate" => $date, "timing" => \App\L\MenuTiming::ID_LUNCH, "menus" => $row[\App\L\MenuTiming::ID_LUNCH]])
             </td>
             <td id="d-dinner-<?= $date ?>" class="d-dinner">
-                <div class="columns">
-                    <div class="column is-10">
-                        <?php foreach($row[\App\L\MenuTiming::ID_DINNER] as $menu): ?>
-                            <div id="d-dinner-menu-<?= $menu->id ?>" class="d-dinner-menu val">{{ $menu->name }}</div>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="column">
-                        <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER]) }}" class="button is-small">編集</a>
-                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'up'])
-                        @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'down'])
-                    </div>
-                </div>
+                @include("admin.menu.index.item", ["servedate" => $date, "timing" => \App\L\MenuTiming::ID_DINNER, "menus" => $row[\App\L\MenuTiming::ID_DINNER]])
             </td>
         </tr>
         <?php endforeach; ?>
