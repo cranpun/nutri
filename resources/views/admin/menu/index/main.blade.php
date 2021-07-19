@@ -36,7 +36,7 @@
         <tr id="row-<?= $date ?>" class="">
             <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
-                <div class="columns is-mobile">
+                <div class="columns">
                     <div class="column is-10">
                         <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
                             <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
@@ -50,7 +50,7 @@
                 <?div>
             </td>
             <td id="d-dinner-<?= $date ?>" class="d-dinner">
-                <div class="columns is-mobile">
+                <div class="columns">
                     <div class="column is-10">
                         <?php foreach($row[\App\L\MenuTiming::ID_DINNER] as $menu): ?>
                             <div id="d-dinner-menu-<?= $menu->id ?>" class="d-dinner-menu val">{{ $menu->name }}</div>

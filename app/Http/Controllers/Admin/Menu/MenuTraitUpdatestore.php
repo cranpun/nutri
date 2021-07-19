@@ -81,6 +81,11 @@ trait MenuTraitUpdatestore
         // まずはmenu_ids["oldids"]に従って古いfoodmenuを削除
         \App\Models\Menufood::whereIn("menu_id", $menu_ids["oldids"])->delete();
 
+        if(count($menu_ids["newids"]) <= 0) {
+            // 新しい献立がないためポストされた食材は全て破棄
+            return;
+        }
+
         // 新しいmenu_ids["newids"]に従って新しいfoodmenuを登録。food_idsはuiのidx配列で保存されているのでそれを踏まえること。
         foreach($menufoods as $idx => $menufood_ids) {
             $menu_id = $menu_ids["newids"][$idx];
