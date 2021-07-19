@@ -38,8 +38,8 @@ trait MenuTraitIndex
             "menu.timing AS timing",
         ]);
         $q->whereBetween("servedate", [$srch[$NAME_START], $srch[$NAME_END]]);
-        $q->orderBy("menu.servedate", "ASC");
-        $q->orderBy("menu.timing", "ASC");
+        $q->orderBy("menu.servedate", "DESC");
+        $q->orderBy("menu.timing", "DESC");
         $raws = $q->get();
         $rows = $this->index_make($raws, $srch, $NAME_START, $NAME_END);
         return $rows;
@@ -48,8 +48,7 @@ trait MenuTraitIndex
     private function index_make($rows, $srch, $NAME_START, $NAME_END)
     {
         // servedateを補完しつつ、servedate x timingの連想配列を構成
-        // MYTODO 日付範囲。まずは前後1週間
-        $period = \Carbon\CarbonPeriod::create($srch[$NAME_START], $srch[$NAME_END]);
+        $period = array_reverse(\Carbon\CarbonPeriod::create($srch[$NAME_START], $srch[$NAME_END])->toArray());
 
         $idx = 0;
         $ret = [];

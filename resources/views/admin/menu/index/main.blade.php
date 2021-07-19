@@ -36,16 +36,24 @@
         <tr id="row-<?= $date ?>" class="">
             <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
+                <div>
+                    <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}" class="button is-small">編集</a>
+                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'up'])
+                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH, 'dir' => 'down'])
+                </div>
                 <?php foreach($row[\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
                     <div id="d-lunch-menu-<?= $menu->id ?>" class="d-lunch-menu val">{{ $menu->name }}</div>
                 <?php endforeach; ?>
-                <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_LUNCH]) }}" class="button is-small">編集</a>
             </td>
             <td id="d-dinner-<?= $date ?>" class="d-dinner">
+                <div>
+                    <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER]) }}" class="button is-small">編集</a>
+                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'up'])
+                    @include("admin.menu.index.swap", ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER, 'dir' => 'down'])
+                </div>
                 <?php foreach($row[\App\L\MenuTiming::ID_DINNER] as $menu): ?>
                     <div id="d-dinner-menu-<?= $menu->id ?>" class="d-dinner-menu val">{{ $menu->name }}</div>
                 <?php endforeach; ?>
-                <a href="{{ route('admin-menu-update', ['servedate' => $date, 'timing' => \App\L\MenuTiming::ID_DINNER]) }}" class="button is-small">編集</a>
             </td>
         </tr>
         <?php endforeach; ?>

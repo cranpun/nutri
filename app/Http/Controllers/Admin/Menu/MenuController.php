@@ -16,4 +16,5 @@ class MenuController extends \App\Http\Controllers\Controller
     use \App\Http\Controllers\Admin\Menu\MenuTraitIndex;
     use \App\Http\Controllers\Admin\Menu\MenuTraitUpdate;
     use \App\Http\Controllers\Admin\Menu\MenuTraitUpdatestore;
+    use \App\Http\Controllers\Admin\Menu\MenuTraitSwapstore;
 }
