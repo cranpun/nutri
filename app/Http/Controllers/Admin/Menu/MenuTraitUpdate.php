@@ -6,7 +6,7 @@ trait MenuTraitUpdate
 {
     public function update(\Illuminate\Http\Request $request, $servedate, $timing)
     {
-        $menumax = 5;
+        $menumax = config("myconf.menumax");
         $rows = $this->update_loadMenus($servedate, $timing, $menumax);
         $foods = $this->update_loadFoods();
         $menufoods = $this->update_loadMenufoods($rows, $foods);
@@ -88,7 +88,7 @@ trait MenuTraitUpdate
 
     private function update_loadLackRecomand($servedate)
     {
-        $rangeday = 15;
+        $rangeday = config("myconf.nutrioffset");
         $startdate = \Carbon\Carbon::parse($servedate)->addDay($rangeday * -1)->format("Y-m-d");
         $enddate = \Carbon\Carbon::parse($servedate)->addDay($rangeday * 1)->format("Y-m-d");
 
