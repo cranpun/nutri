@@ -70,7 +70,9 @@ trait MenuTraitIndex
 
             while($str_perioddate == $rows[$idx]->servedate) {
                 // この日のデータ
-                $ret[$str_perioddate][$rows[$idx]->timing][] = $rows[$idx];
+                $nowrow =  $rows[$idx];
+                $nowrow["foods"] = $this->index_loadFood($rows[$idx]["id"]);
+                $ret[$str_perioddate][$rows[$idx]->timing][] = $nowrow;
 
                 // 次のロードデータへ。
                 $idx++;
@@ -80,6 +82,21 @@ trait MenuTraitIndex
                 }
             }
         }
+        return $ret;
+    }
+
+    private function index_loadFood($menu_id)
+    {
+        $q = \App\Models\Menufood::query();
+        $q->join("food", "food.id", "=", "menufood.food_id");
+        $q->where("menufood.menu_id", "=", $menu_id);
+        $q->orderBy("food.favorite", "ASC");
+        $q->orderBy("food.category", "ASC");
+        $q->select([
+            "food.name AS name",
+        ]);
+        $rows = $q->get()->toArray();
+        $ret = array_column($rows, "name");
         return $ret;
     }
 }
