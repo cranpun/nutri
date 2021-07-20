@@ -93,10 +93,11 @@ trait MenuTraitIndex
         $q->orderBy("food.favorite", "ASC");
         $q->orderBy("food.category", "ASC");
         $q->select([
+            "food.id AS id",
             "food.name AS name",
         ]);
-        $rows = $q->get()->toArray();
-        $ret = array_column($rows, "name");
+        $rows = $q->get();
+        $ret = $rows;
         return $ret;
     }
 }
