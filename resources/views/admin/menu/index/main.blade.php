@@ -59,7 +59,7 @@ $today = \Carbon\Carbon::today()->format("Y-m-d");
 <table id="indextable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed;">
     <thead>
         <tr>
-            <th style="width: 100px;">日付</th>
+            <th style="width: 60px;">日付</th>
             <th>昼食</th>
             <th>夕食</th>
         </tr>
@@ -67,7 +67,7 @@ $today = \Carbon\Carbon::today()->format("Y-m-d");
     <tbody>
         <?php foreach($rows as $date => $row): ?>
         <tr id="row-<?= $date ?>" class="{{ $date == $today ? 'has-background-primary-light' : '' }}">
-            <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d(D)") ?></td>
+            <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d\n(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
                 @include("admin.menu.index.item", ["servedate" => $date, "timing" => \App\L\MenuTiming::ID_LUNCH, "menus" => $row[\App\L\MenuTiming::ID_LUNCH]])
             </td>
