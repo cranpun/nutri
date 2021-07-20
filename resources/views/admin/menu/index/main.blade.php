@@ -36,16 +36,14 @@ $today = \Carbon\Carbon::today()->format("Y-m-d");
     <tbody>
         <tr id="row-today" class="">
             <td id="d-lunch-today" class="d-lunch">
-                <ul>
                 <?php foreach($rows[$today][\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
-                    <li id="d-lunch-today-menu-{{ $menu->id }}">{{ $menu->name }}</li>
+                    @include("admin.menu.index.foodmodal", ["menu" => $menu, "prefix" => "today"])
                 <?php endforeach; ?>
-                </ul>
             </td>
             <td id="d-dinner-today" class="d-dinner">
             <ul>
                 <?php foreach($rows[$today][\App\L\MenuTiming::ID_DINNER] as $menu): ?>
-                    <li id="d-lunch-today-menu-{{ $menu->id }}">{{ $menu->name }}</li>
+                    @include("admin.menu.index.foodmodal", ["menu" => $menu, "prefix" => "today"])
                 <?php endforeach; ?>
                 </ul>
             </td>
