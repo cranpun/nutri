@@ -60,7 +60,7 @@
                         </a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href="{{ route('admin-analy-calendarfood') }}">
+                            <a id="topnav-calendarfood" class="navbar-item" href="{{ route('admin-analy-calendarfood') }}">
                                 <span class="material-icons">calendar_today</span>
                                 <span>食材カレンダー</span>
                             </a>
