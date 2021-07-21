@@ -6,14 +6,14 @@
 
 @section("labeltitle")
 <div>献立一覧</div>
+@endsection
+
+@section("labelsubtitle")
 <div class="is-size-5">
     <span id="srch-label-startday">{{ $srch[$NAME_START] }}</span>
     <span>～</span>
     <span id="srch-label-endday">{{ $srch[$NAME_END] }}</span>
 </div>
-@endsection
-
-@section("labelsubtitle")
 @endsection
 
 @section("main")

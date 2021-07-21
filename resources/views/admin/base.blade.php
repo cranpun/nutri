@@ -64,6 +64,10 @@
                                 <span class="material-icons">calendar_today</span>
                                 <span>食材カレンダー</span>
                             </a>
+                            <a id="topnav-calendarnutri" class="navbar-item" href="{{ route('admin-analy-calendarnutri') }}">
+                                <span class="material-icons">calendar_today</span>
+                                <span>栄養素カレンダー</span>
+                            </a>
                         </div>
                     </div>
                 </div>

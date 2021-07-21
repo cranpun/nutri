@@ -42,4 +42,5 @@ Route::middleware(["can:admin","auth"])->group(function () {
     // analy
     // **************************************************************
     Route::get("/analy/calendarfood", [AnalyController::class, "calendarfood"])->name("admin-analy-calendarfood");
+    Route::get("/analy/calendarnutri", [AnalyController::class, "calendarnutri"])->name("admin-analy-calendarnutri");
 });
