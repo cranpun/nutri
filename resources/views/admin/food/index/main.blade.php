@@ -43,7 +43,11 @@
             <td id="d-id-<?= $id ?>" class="d-id val"><?= $row["id"] ?></td>
             <td id="d-category-<?= $id ?>" class="d-category val"><?= (new \App\L\FoodCategory())->label($row["category"]) ?></td>
             <td id="d-name-<?= $id ?>" class="d-name val"><?= $row["name"] ?></td>
-            <td id="d-nutri-<?= $id ?>" class="d-nutri val"><?= join(",", $row["nutri"]) ?></td>
+            <td id="d-nutri-<?= $id ?>" class="d-nutri val">
+                <?php foreach($row["nutri"] as $nutri_id => $nutri): ?>
+                    <span id="d-foodnutri-{{ $id }}-{{$nutri_id}}" class="d-foodnutri-{{ $id }}">{{ $nutri }}</span>
+                <?php endforeach; ?>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>

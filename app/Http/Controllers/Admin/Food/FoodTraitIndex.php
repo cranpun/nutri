@@ -58,7 +58,7 @@ trait FoodTraitIndex
     private function index_favoritecolor($fav) 
     {
         $colors = [
-            0 => "has-background-primary-light",
+            0 => "has-background-primary-light favorite",
         ];
         if(array_key_exists($fav, $colors)) {
             return $colors[$fav];
