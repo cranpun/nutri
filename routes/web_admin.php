@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\User\UserController;
 use \App\Http\Controllers\Admin\Food\FoodController;
 use \App\Http\Controllers\Admin\Menu\MenuController;
+use \App\Http\Controllers\Admin\Analy\AnalyController;
 
 Route::middleware(["can:admin","auth"])->group(function () {
     Route::get("/", [MenuController::class, "index"])->name("top"); // MYTODO 生徒一覧ができればそれに変更。
@@ -36,4 +37,9 @@ Route::middleware(["can:admin","auth"])->group(function () {
     Route::get("/menu/update/{servedate}/{timing}", [MenuController::class, "update"])->name("admin-menu-update");
     Route::post("/menu/updatestore/{servedate}/{timing}", [MenuController::class, "updatestore"])->name("admin-menu-updatestore");
     Route::post("/menu/swapstore/{servedate}/{timing}/{dir}", [MenuController::class, "swapstore"])->name("admin-menu-swapstore");
+
+    // **************************************************************
+    // analy
+    // **************************************************************
+    Route::get("/analy/calendarfood", [AnalyController::class, "calendarfood"])->name("admin-analy-calendarfood");
 });
