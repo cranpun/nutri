@@ -115,7 +115,7 @@ CREATE TABLE `menu` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +124,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+INSERT INTO `menu` VALUES (1,'bdd_menu1','2021-07-21','lunch','2021-07-21 04:15:06','2021-07-21 04:15:06'),(2,'bdd_menu2','2021-07-21','lunch','2021-07-21 04:15:06','2021-07-21 04:15:06');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +143,7 @@ CREATE TABLE `menufood` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +152,7 @@ CREATE TABLE `menufood` (
 
 LOCK TABLES `menufood` WRITE;
 /*!40000 ALTER TABLE `menufood` DISABLE KEYS */;
+INSERT INTO `menufood` VALUES (1,'1','2',0,'2021-07-21 04:15:06','2021-07-21 04:15:06'),(2,'1','3',0,'2021-07-21 04:15:06','2021-07-21 04:15:06'),(3,'1','56',0,'2021-07-21 04:15:06','2021-07-21 04:15:06'),(4,'2','2',0,'2021-07-21 04:15:06','2021-07-21 04:15:06'),(5,'2','3',0,'2021-07-21 04:15:06','2021-07-21 04:15:06'),(6,'2','56',0,'2021-07-21 04:15:06','2021-07-21 04:15:06');
 /*!40000 ALTER TABLE `menufood` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,4 +277,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-21 13:14:53
+-- Dump completed on 2021-07-21 13:15:08

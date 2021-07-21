@@ -5,6 +5,8 @@ import * as BddCommand from "./BddCommand";
 import { BddRole } from "./BddRole";
 import { AdminRole } from "./specs/admin/AdminRole";
 const process = require("process");
+const sound = require("sound-play");
+import path = require("path");
 
 const main = (async () => {
     require("dotenv").config();

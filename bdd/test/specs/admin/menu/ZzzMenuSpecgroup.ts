@@ -1,23 +1,20 @@
 import { BddSpecgroup } from "../../../BddSpecgroup"
 import { BddSpec } from "../../../BddSpec";
-import { Create } from "./Create";
-import { Delete } from "./Delete";
 import { Update } from "./Update";
+import { Swap } from "./Swap";
 
-export class ZzzFoodSpecgroup extends BddSpecgroup {
+export class ZzzMenuSpecgroup extends BddSpecgroup {
     makeSpecs(): BddSpec[] {
         const ret: BddSpec[] = [
-            new Create(),
-            new Delete(),
             new Update(),
+            new Swap(),
         ];
         return ret;
     }
     execSpecs(): string[] {
         const ret: string[] = [
-            Create.name,
-            Delete.name,
             Update.name,
+            Swap.name
         ];
         return ret;
     }
