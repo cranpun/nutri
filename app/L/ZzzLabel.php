@@ -55,13 +55,13 @@ abstract class ZzzLabel
      * @param $clm caseに適応するテーブルのカラム
      * @param $field ASの名前
      */
-    public function sqlCase($clm, $field)
+    public function sqlCase($clm, $alias)
     {
         $case = "";
         foreach ($this->labels() as $key => $label) {
             $case .= " WHEN {$clm}='{$key}' THEN '{$label}' ";
         }
-        $ret = "CASE {$case} END AS {$field}";
+        $ret = "CASE {$case} END AS {$alias}";
         return $ret;
     }
 

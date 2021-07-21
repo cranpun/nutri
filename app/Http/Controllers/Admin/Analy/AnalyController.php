@@ -12,5 +12,5 @@ class AnalyController extends \App\Http\Controllers\Controller
     // *********************************************************
     // action
     // *********************************************************
-    use \App\Http\Controllers\Admin\Food\AnalyTraitCalendarfood;
+    use AnalyTraitCalendarfood;
 }

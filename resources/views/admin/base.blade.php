@@ -53,21 +53,23 @@
                         <span class="material-icons">savings</span>
                         <span>食材</span>
                     </a>
+                    <div id="topnav-analymenu" class="navbar-item has-dropdown">
+                        <a id="topnav-analy" class="navbar-link">
+                            <span class="material-icons">bar_chart</span>
+                            <span>分析</span>
+                        </a>
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="{{ route('admin-analy-calendarfood') }}">
+                                <span class="material-icons">calendar_today</span>
+                                <span>食材カレンダー</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="navbar-end">
                     <div id="topnav-endmenu" class="navbar-item has-dropdown">
                         <a id="topnav-myname" class="navbar-link">{{ \Auth::user()->display_name }}さん<span class=" caret"></span></a>
-                        <script type="text/javascript">
-                            window.addEventListener("load", function () {
-                                document.querySelector("#topnav-myname").addEventListener("click", function () {
-                                    document.querySelector("#topnav-endmenu").classList.toggle("is-active");
-                                });
-                                document.querySelector("#topnav-myname").addEventListener("touchend", function (ev) {
-                                    ev.preventDefault();
-                                    document.querySelector("#topnav-endmenu").classList.toggle("is-active");
-                                });
-                            });
-                        </script>
                         <div id="topnav-myname-menu" class="navbar-dropdown is-right">
                             <a id="topnav-changepassword" class="navbar-item">
                                 <span>パスワード変更</span>
@@ -113,6 +115,29 @@
                     </div> <!-- .has-dropdown -->
                 </div> <!-- .navbar-end -->
             </section>
+            <script type="text/javascript">
+                window.addEventListener("load", function () {
+                    const menuactives = [
+                        {
+                            button: "#topnav-myname",
+                            menu: "#topnav-endmenu",
+                        },
+                        {
+                            button: "#topnav-analy",
+                            menu: "#topnav-analymenu",
+                        },
+                    ];
+                    for(const menuactive of menuactives) {
+                        document.querySelector(menuactive.button).addEventListener("click", function () {
+                            document.querySelector(menuactive.menu).classList.toggle("is-active");
+                        });
+                        document.querySelector(menuactive.button).addEventListener("touchend", function (ev) {
+                            ev.preventDefault();
+                            document.querySelector(menuactive.menu).classList.toggle("is-active");
+                        });
+                    }
+                });
+            </script>
         </nav>
     </header>
     <main id="main" style="flex: 1;">
