@@ -47,9 +47,25 @@ trait AnalyTraitCalendarnutri
         $raws = $q->get();
         $ret = [];
         foreach($raws as $raw) {
+            $raw["foods"] = $this->calendarnutri_foods($raw->id);
             $ret[$raw->id] = $raw;
         }
         return $ret;
+    }
+
+    private function calendarnutri_foods($nutri_id)
+    {
+        $q = \App\Models\Foodnutri::query();
+        $q->join("food", "food.id", "=", "foodnutri.food_id");
+        $q->where("foodnutri.nutri_id", "=", $nutri_id);
+        $q->orderBy("favorite", "ASC");
+        $q->orderBy("category", "ASC");
+        $q->select([
+            "food.id AS id",
+            "food.name AS name",
+        ]);
+        $raws = $q->get();
+        return $raws;
     }
 
     private function calendarnutri_initdata($nutris, $period)

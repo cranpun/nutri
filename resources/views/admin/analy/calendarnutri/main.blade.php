@@ -35,7 +35,9 @@
     <tbody>
         <?php foreach($rows as $nutri_id => $datedata): $nutri = $nutris[$nutri_id]; ?>
         <tr id="row-<?= $nutri_id ?>">
-            <td id="d-name-<?= $nutri_id ?>" class="d-name val"><?= $nutri->name ?></td>
+            <td id="d-name-<?= $nutri_id ?>" class="d-name val">
+                @include("admin.analy.calendarnutri.foodmodal", ["nutri" => $nutri])
+            </td>
             <?php foreach($datedata as $date => $count) : ?>
                 <td id="d-date-{{ $nutri_id }}-{{ $date }}" class="has-text-right" style="background:rgba(255, 0, 0, {{ $count * 0.1 }})">{{ number_format($count) }}</td>
             <?php endforeach; ?>
