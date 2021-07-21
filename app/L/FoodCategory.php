@@ -9,6 +9,7 @@ class FoodCategory extends ZzzLabel
     const ID_SEAFOOD = "seafood";
     const ID_GRAIN = "grain";
     const ID_SEASONING = "seasoning";
+    const ID_FRUIT = "fruit";
     const ID_ETC = "etc";
 
     public function labels()
@@ -19,6 +20,7 @@ class FoodCategory extends ZzzLabel
             self::ID_SEAFOOD => "魚介類",
             self::ID_GRAIN => "穀物",
             self::ID_SEASONING => "調味料",
+            self::ID_FRUIT => "果物",
             self::ID_ETC => "その他",
         ];
     }
