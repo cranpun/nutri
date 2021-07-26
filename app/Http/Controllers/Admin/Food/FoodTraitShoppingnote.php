@@ -29,7 +29,6 @@ trait FoodTraitShoppingnote
             \DB::raw((new \App\L\FoodCategory())->sqlCase("food.category", "category")),
             \DB::raw("count(food.id) AS count"),
         ]);
-        $q->orderBy("food.favorite", "ASC");
         $q->orderBy("food.category", "ASC");
         $ret = $q->get();
         return $ret;
