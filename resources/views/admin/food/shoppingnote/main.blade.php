@@ -17,9 +17,6 @@
 @endsection
 
 @section("main")
-<section class="mb-3">
-    @include("admin.food.index.createmodal")
-</section>
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
 </div>
