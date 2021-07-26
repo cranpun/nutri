@@ -34,7 +34,12 @@
     <tbody>
         <?php foreach($rows as $row): $id = $row['id']; ?>
         <tr id="row-<?= $id ?>">
-            <td id="d-name-<?= $id ?>" class="d-name val"><?= $row["name"] ?></td>
+            <td>
+                <label>
+                    <span id="d-name-<?= $id ?>" class="d-name val"><input type="checkbox"></span>
+                    <?= $row["name"] ?>
+                </label>
+            </td>
             <td id="d-category-<?= $id ?>" class="d-category val"><?= $row["category"] ?></td>
             <td id="d-count-<?= $id ?>" class="d-count val"><?= $row["count"] ?></td>
         </tr>
