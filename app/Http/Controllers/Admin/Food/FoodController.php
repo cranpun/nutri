@@ -17,4 +17,5 @@ class FoodController extends \App\Http\Controllers\Controller
     use \App\Http\Controllers\Admin\Food\FoodTraitIndex;
     use \App\Http\Controllers\Admin\Food\FoodTraitUpdate;
     use \App\Http\Controllers\Admin\Food\FoodTraitUpdatestore;
+    use \App\Http\Controllers\Admin\Food\FoodTraitShoppingnote;
 }

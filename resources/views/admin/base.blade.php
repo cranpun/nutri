@@ -53,6 +53,10 @@
                         <span class="material-icons">savings</span>
                         <span>食材</span>
                     </a>
+                    <a id="topnav-food" class="navbar-item" href="{{ route('admin-food-shoppingnote') }}">
+                        <span class="material-icons">shopping_cart</span>
+                        <span>買い物</span>
+                    </a>
                     <div id="topnav-analymenu" class="navbar-item has-dropdown">
                         <a id="topnav-analy" class="navbar-link">
                             <span class="material-icons">bar_chart</span>
