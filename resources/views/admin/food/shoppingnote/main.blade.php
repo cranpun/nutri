@@ -10,9 +10,9 @@
 
 @section("labelsubtitle")
 <div class="is-size-5">
-    <span id="srch-label-sdate">{{ $sdate }}</span>
+    <span id="srch-label-sdate">{{ \Carbon\Carbon::parse($sdate)->format("m/d(D)") }}</span>
     <span>～</span>
-    <span id="srch-label-edate">{{ $edate }}</span>
+    <span id="srch-label-edate">{{ \Carbon\Carbon::parse($edate)->format("m/d(D)") }}</span>
 </div>
 @endsection
 
