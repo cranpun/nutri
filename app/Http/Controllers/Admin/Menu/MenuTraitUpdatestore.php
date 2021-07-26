@@ -38,7 +38,7 @@ trait MenuTraitUpdatestore
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function updatestore_procMenu($servedate, $timing, $names) : array
+    private function updatestore_procMenu($servedate, $timing, $names): array
     {
         // まずは該当するメニューを保持。menufoodクリアのため。
         $q_old = \App\Models\Menu::query();
@@ -46,7 +46,7 @@ trait MenuTraitUpdatestore
         $q_old->where("timing", "=", $timing);
         $rows_old = $q_old->get();
         $oldids = [];
-        foreach($rows_old as $row) {
+        foreach ($rows_old as $row) {
             $oldids[] = $row->id;
         }
 
@@ -60,8 +60,8 @@ trait MenuTraitUpdatestore
         $val_now = [
             "name" => $val["name"],
         ];
-        foreach($names as $idx => $name) {
-            if($name && strlen($name) > 0) {
+        foreach ($names as $idx => $name) {
+            if ($name && strlen($name) > 0) {
                 $ent = new \App\Models\Menu();
                 // amountは未使用なので0固定。
                 \validator::make(["name" => $name], $val_now)->validate();
@@ -81,20 +81,22 @@ trait MenuTraitUpdatestore
         // まずはmenu_ids["oldids"]に従って古いfoodmenuを削除
         \App\Models\Menufood::whereIn("menu_id", $menu_ids["oldids"])->delete();
 
-        if(count($menu_ids["newids"]) <= 0) {
+        if (count($menu_ids["newids"]) <= 0) {
             // 新しい献立がないためポストされた食材は全て破棄
             return;
         }
 
         // 新しいmenu_ids["newids"]に従って新しいfoodmenuを登録。food_idsはuiのidx配列で保存されているのでそれを踏まえること。
-        foreach($menufoods as $idx => $menufood_ids) {
-            $menu_id = $menu_ids["newids"][$idx];
-            foreach($menufood_ids as $food_id => $on) {
-                $ent = new \App\Models\Menufood();
-                $ent->food_id = $food_id;
-                $ent->menu_id = $menu_id;
-                $ent->amount = 0; // amountは未使用なので0固定
-                $ent->save();
+        foreach ($menufoods as $idx => $menufood_ids) {
+            if (array_key_exists($idx, $menu_ids["newids"]) && strlen($menu_ids["newids"][$idx]) > 0) {
+                $menu_id = $menu_ids["newids"][$idx];
+                foreach ($menufood_ids as $food_id => $on) {
+                    $ent = new \App\Models\Menufood();
+                    $ent->food_id = $food_id;
+                    $ent->menu_id = $menu_id;
+                    $ent->amount = 0; // amountは未使用なので0固定
+                    $ent->save();
+                }
             }
         }
     }
