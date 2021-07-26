@@ -16,9 +16,9 @@ export class AdminRole extends BddRole {
     }
     public execSpecgroups(): string[]{
         return [
-            // ZzzUserSpecgroup.name,
-            // ZzzFoodSpecgroup.name,
-            // ZzzMenuSpecgroup.name,
+            ZzzUserSpecgroup.name,
+            ZzzFoodSpecgroup.name,
+            ZzzMenuSpecgroup.name,
             ZzzAnalySpecgroup.name,
         ]
     }
