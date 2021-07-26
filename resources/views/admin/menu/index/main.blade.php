@@ -1,3 +1,7 @@
+<?php
+use \App\Http\Controllers\Admin\Menu\MenuController;
+?>
+
 @extends("admin.base")
 
 @section("title")
@@ -10,21 +14,22 @@
 
 @section("labelsubtitle")
 <div class="is-size-5">
-    <span id="srch-label-startday">{{ $srch[$NAME_START] }}</span>
+    <span id="srch-label-startday">{{ $srch[MenuController::$index_NAME_SDATE] }}</span>
     <span>～</span>
-    <span id="srch-label-endday">{{ $srch[$NAME_END] }}</span>
+    <span id="srch-label-endday">{{ $srch[MenuController::$index_NAME_EDATE] }}</span>
 </div>
 @endsection
 
 @section("main")
 <div>
-    @include("admin.menu.index.filter", compact(["NAME_START", "NAME_END"]))
+    @include("admin.menu.index.filter", compact(["srch"]))
 </div>
 
 
 <?php
 $today = \Carbon\Carbon::today()->format("Y-m-d");
 ?>
+<?php if(array_key_exists($today, $rows)) : ?>
 <h4 class="is-size-4">本日（{{ $today }}）の献立</h4>
 <table id="indextable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed;">
     <thead>
@@ -52,6 +57,7 @@ $today = \Carbon\Carbon::today()->format("Y-m-d");
 </table>
 
 <hr />
+<?php endif; ?>
 
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
@@ -69,10 +75,10 @@ $today = \Carbon\Carbon::today()->format("Y-m-d");
         <tr id="row-<?= $date ?>" class="{{ $date == $today ? 'has-background-primary-light' : '' }}">
             <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d\n(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
-                @include("admin.menu.index.item", ["servedate" => $date, "timing" => \App\L\MenuTiming::ID_LUNCH, "menus" => $row[\App\L\MenuTiming::ID_LUNCH]])
+                @include("admin.menu.index.item", ["servedate" => $date, "srch" => $srch, "timing" => \App\L\MenuTiming::ID_LUNCH, "menus" => $row[\App\L\MenuTiming::ID_LUNCH]])
             </td>
             <td id="d-dinner-<?= $date ?>" class="d-dinner">
-                @include("admin.menu.index.item", ["servedate" => $date, "timing" => \App\L\MenuTiming::ID_DINNER, "menus" => $row[\App\L\MenuTiming::ID_DINNER]])
+                @include("admin.menu.index.item", ["servedate" => $date, "srch" => $srch, "timing" => \App\L\MenuTiming::ID_DINNER, "menus" => $row[\App\L\MenuTiming::ID_DINNER]])
             </td>
         </tr>
         <?php endforeach; ?>

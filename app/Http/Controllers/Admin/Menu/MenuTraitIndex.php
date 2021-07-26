@@ -5,31 +5,34 @@ use Illuminate\Http\Request;
 
 trait MenuTraitIndex
 {
+    public static $index_NAME_EDATE = "edate";
+    public static $index_NAME_SDATE = "sdate";
     public function index(Request $request)
     {
-        $NAME_START = "startdate";
-        $NAME_END = "enddate";
-        $srch = $this->index_srch($request, $NAME_START, $NAME_END);
-        $rows = $this->index_load($srch, $NAME_START, $NAME_END);
+        $srch = $this->index_srch($request);
+        $rows = $this->index_load($srch);
         $timing = (new \App\L\MenuTiming())->labelObjs();
-        return view("admin.menu.index.main", compact(["rows", "timing", "srch", "NAME_START", "NAME_END"]));
+        return view("admin.menu.index.main", compact(["rows", "timing", "srch"]));
     }
 
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
 
-    private function index_srch($request, $NAME_START, $NAME_END)
+    /**
+     * swapでもsrchを積むのでpublic。
+     */
+    public function index_srch($request)
     {
         $range = config("myconf.nutrioffset");
         $srch = [
-            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDay($range * -1)->format("Y-m-d")),
-            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDay($range * 1)->format("Y-m-d")),
+            self::$index_NAME_SDATE => $request->query(self::$index_NAME_SDATE, \Carbon\Carbon::today()->addDay($range * -1)->format("Y-m-d")),
+            self::$index_NAME_EDATE => $request->query(self::$index_NAME_EDATE, \Carbon\Carbon::today()->addDay($range * 1)->format("Y-m-d")),
         ];
         return $srch;
     }
 
-    private function index_load($srch, $NAME_START, $NAME_END)
+    private function index_load($srch)
     {
         $q = \App\Models\Menu::query();
         $q->select([
@@ -38,18 +41,18 @@ trait MenuTraitIndex
             "menu.servedate AS servedate",
             "menu.timing AS timing",
         ]);
-        $q->whereBetween("servedate", [$srch[$NAME_START], $srch[$NAME_END]]);
+        $q->whereBetween("servedate", [$srch[self::$index_NAME_SDATE], $srch[self::$index_NAME_EDATE]]);
         $q->orderBy("menu.servedate", "DESC");
         $q->orderBy("menu.timing", "DESC");
         $raws = $q->get();
-        $rows = $this->index_make($raws, $srch, $NAME_START, $NAME_END);
+        $rows = $this->index_make($raws, $srch);
         return $rows;
     }
 
-    private function index_make($rows, $srch, $NAME_START, $NAME_END)
+    private function index_make($rows, $srch)
     {
         // servedateを補完しつつ、servedate x timingの連想配列を構成
-        $period = array_reverse(\Carbon\CarbonPeriod::create($srch[$NAME_START], $srch[$NAME_END])->toArray());
+        $period = array_reverse(\Carbon\CarbonPeriod::create($srch[self::$index_NAME_SDATE], $srch[self::$index_NAME_EDATE])->toArray());
 
         $idx = 0;
         $ret = [];

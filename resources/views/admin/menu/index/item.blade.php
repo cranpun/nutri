@@ -6,8 +6,8 @@
 <div class="columns">
     <div class="column">
         <a href="{{ route('admin-menu-update', ['servedate' => $servedate, 'timing' => $timing]) }}" id="act-update-{{ $servedate }}-{{ $timing }}" class="button is-small">編集</a>
-        @include("admin.menu.index.swap", ['servedate' => $servedate, 'timing' => $timing, 'dir' => 'up'])
-        @include("admin.menu.index.swap", ['servedate' => $servedate, 'timing' => $timing, 'dir' => 'down'])
+        @include("admin.menu.index.swap", ['servedate' => $servedate, 'timing' => $timing, 'srch' => $srch, 'dir' => 'up'])
+        @include("admin.menu.index.swap", ['servedate' => $servedate, 'timing' => $timing, 'srch' => $srch, 'dir' => 'down'])
     </div>
     <div class="column is-11">
         <?php foreach($menus as $menu): ?>

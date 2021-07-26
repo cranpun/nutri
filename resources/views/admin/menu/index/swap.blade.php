@@ -1,7 +1,7 @@
 <?php
 /**
  */
-$posturl = route('admin-menu-swapstore', compact(['servedate', 'timing', 'dir']));
+$posturl = route('admin-menu-swapstore', compact(['servedate', 'timing', 'dir']) + $srch);
 ?>
 <form action="{{ $posturl }}" method="POST" style="display: inline-block">
     @csrf
