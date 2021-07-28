@@ -1,3 +1,7 @@
+<?php
+use \App\Http\Controllers\Admin\Food\FoodController;
+?>
+
 @extends("admin.base")
 
 @section("title")
@@ -17,6 +21,7 @@
 @endsection
 
 @section("main")
+<form class="container" method="GET" action="{{ route('admin-food-shoppingnote') }}">
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
 </div>
@@ -33,7 +38,7 @@
         <tr id="row-<?= $id ?>">
             <td>
                 <label>
-                    <span id="d-name-<?= $id ?>" class="d-name val"><input type="checkbox"></span>
+                    <span id="d-name-<?= $id ?>" class="d-name val"><input type="checkbox" name='{{ FoodController::$shoppingnote_NAME_FOOD_ID . "[{$id}]" }}' {{ in_array($id, $food_ids) ? "checked" : "" }} ></span>
                     <?= $row["name"] ?>
                 </label>
             </td>
@@ -43,4 +48,12 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
+<div class="field">
+    <div class="control">
+        <button id="act-submit" type="submit" class="button">一時保存</button>
+    </div>
+</div>
+
+</form>
 @endsection

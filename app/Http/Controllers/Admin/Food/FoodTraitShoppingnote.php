@@ -5,12 +5,15 @@ use Illuminate\Http\Request;
 
 trait FoodTraitShoppingnote
 {
+    public static $shoppingnote_NAME_FOOD_ID = "food_id";
+
     public function shoppingnote(Request $request)
     {
         $sdate = \Carbon\Carbon::today()->format("Y-m-d"); // 開始日：本日
         $edate = \Carbon\Carbon::today()->add(config("myconf.shoppingnoterange"), "day")->format("Y-m-d"); // 2週間先
         $rows = $this->shoppingnote_load($sdate, $edate);
-        return view("admin.food.shoppingnote.main", compact(["rows", "sdate", "edate"]));
+        $food_ids = $this->shoppingnote_postfoodids($request);
+        return view("admin.food.shoppingnote.main", compact(["rows", "sdate", "edate", "food_ids"]));
     }
 
     // *************************************
@@ -31,6 +34,13 @@ trait FoodTraitShoppingnote
         ]);
         $q->orderBy("food.category", "ASC");
         $ret = $q->get();
+        return $ret;
+    }
+
+    private function shoppingnote_postfoodids($request)
+    {
+        $data = $request->query(self::$shoppingnote_NAME_FOOD_ID, []);
+        $ret = array_keys($data);
         return $ret;
     }
 }
