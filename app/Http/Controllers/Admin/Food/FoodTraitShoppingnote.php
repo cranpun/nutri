@@ -25,15 +25,31 @@ trait FoodTraitShoppingnote
         $q->join("menu", "menu.id", "=", "menufood.menu_id");
         $q->join("food", "food.id", "=", "menufood.food_id");
         $q->whereBetween("menu.servedate", [$sdate, $edate]);
-        $q->groupBy(["food.id", "food.name", "food.category"]);
         $q->select([
-            "food.id AS id",
-            "food.name AS name",
-            \DB::raw((new \App\L\FoodCategory())->sqlCase("food.category", "category")),
-            \DB::raw("count(food.id) AS count"),
+            "menu.name AS menu_name",
+            "menu.servedate AS menu_servedate",
+            "food.id AS food_id",
+            "food.name AS food_name",
+            \DB::raw((new \App\L\FoodCategory())->sqlCase("food.category", "food_category")),
         ]);
         $q->orderBy("food.category", "ASC");
-        $ret = $q->get();
+        $q->orderBy("menu.servedate", "ASC");
+
+        $rows = $q->get();
+        $ret = [];
+        foreach($rows as $row) {
+            if(!array_key_exists($row->food_id, $ret)) {
+                // 初期化
+                $ret[$row->food_id] = [
+                    "food_id" => $row->food_id,
+                    "food_name" => $row->food_name,
+                    "food_category" => $row->food_category,
+                    "menus" => [],
+                ];
+            }
+            $ret[$row->food_id]["menus"][] = $row;
+        }
+
         return $ret;
     }
 

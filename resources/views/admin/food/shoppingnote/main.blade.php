@@ -34,16 +34,18 @@ use \App\Http\Controllers\Admin\Food\FoodController;
         </tr>
     </thead>
     <tbody>
-        <?php foreach($rows as $row): $id = $row['id']; ?>
+        <?php foreach($rows as $row): $id = $row['food_id']; ?>
         <tr id="row-<?= $id ?>">
             <td>
                 <label>
-                    <span id="d-name-<?= $id ?>" class="d-name val"><input type="checkbox" name='{{ FoodController::$shoppingnote_NAME_FOOD_ID . "[{$id}]" }}' {{ in_array($id, $food_ids) ? "checked" : "" }} ></span>
-                    <?= $row["name"] ?>
+                    <input type="checkbox" name='{{ FoodController::$shoppingnote_NAME_FOOD_ID . "[{$id}]" }}' {{ in_array($id, $food_ids) ? "checked" : "" }} >
+                    <span id="d-food_name-<?= $id ?>" class="d-food_name val"><?= $row["food_name"] ?></span>
                 </label>
             </td>
-            <td id="d-category-<?= $id ?>" class="d-category val"><?= $row["category"] ?></td>
-            <td id="d-count-<?= $id ?>" class="d-count val"><?= $row["count"] ?></td>
+            <td id="d-category-<?= $id ?>" class="d-category val"><?= $row["food_category"] ?></td>
+            <td id="d-count-<?= $id ?>" class="d-count val">
+                @include("admin.food.shoppingnote.menumodal", ["food" => $row])
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
