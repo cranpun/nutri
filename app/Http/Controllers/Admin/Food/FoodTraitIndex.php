@@ -11,11 +11,11 @@ trait FoodTraitIndex
         $q->select([
             "food.id AS id",
             "food.name AS name",
+            "food.kana AS kana",
             "food.favorite AS favorite",
             "food.category AS category",
         ]);
-        $q->orderBy("food.favorite", "ASC");
-        $q->orderBy("food.category", "ASC");
+        $q->orderBy("food.kana", "ASC");
         $raws = $q->get();
         $rows = $this->index_make($raws);
         return view("admin.food.index.main", compact(["rows"]));

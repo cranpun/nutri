@@ -17,7 +17,19 @@
         </pre>
     </div>
     @endif
-    <?php if($errors && count($errors->all()) > 0) : ?>
-    <div id="message-error-validation" class='notification is-danger is-light mt-2'>入力内容に問題がございました。ご確認の上、もう一度お試しください。</div>
+    <?php if($errors->any()) : ?>
+        <div id="message-error-validation" class='notification is-danger is-light mt-2'>
+            <div>入力内容に問題がございました。ご確認の上、もう一度お試しください。</div>
+            <?php foreach($errors->getMessages() as $key => $messages) : ?>
+            <div>
+                <div class="tag is-danger">{{ $key }}</div>
+                <ul>
+                    <?php foreach($messages as $message) : ?>
+                    <li>{{ $message }}</li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 </section>

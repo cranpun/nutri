@@ -33,6 +33,7 @@ trait FoodTraitUpdatestore
 
             $row = \App\Models\Food::where("id", "=", $food_id)->first();
             $row->name = $name;
+            $row->kana = array_key_exists("kana", $data) ? $data["kana"] : "";
             $row->category = $data["category"];
             $row->favorite = $data["favorite"];
 

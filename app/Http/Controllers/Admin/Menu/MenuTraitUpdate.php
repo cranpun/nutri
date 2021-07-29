@@ -62,8 +62,7 @@ trait MenuTraitUpdate
     private function update_loadFoods()
     {
         $q = \App\Models\Food::query();
-        $q->orderBy("favorite", "ASC");
-        $q->orderBy("category", "ASC");
+        $q->orderBy("kana", "ASC");
         $raws = $q->get();
         $ret = [];
         // 背景色の設定

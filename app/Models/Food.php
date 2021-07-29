@@ -19,6 +19,7 @@ class Food extends Model
     {
         return [
             "name" => "required|string",
+            "kana" => "required|string",
             "category" => "required|in:" . join(",", array_keys((new \App\L\FoodCategory())->labels())),
             "favorite" => "required|in:0,100",
         ];

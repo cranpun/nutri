@@ -17,6 +17,7 @@
     <input type="hidden" name="id" id="id" value="{{ $row['id'] }}">
     <x-mycheckbox field="favorite" label="お気に入り" :defval="old('favorite', $row['favorite'] == 0)" />
     <x-myinput field="name" label="名前" type="text" :defval="old('name', $row['name'])" placeholder="" />
+    <x-myinput field="kana" label="かな" type="text" :defval="old('kana', $row['kana'])" placeholder="" />
     <x-myselect field="category" label="カテゴリ" :options="$category" :defval="old('category', $row['category'])" :enablefilter='false' />
 
     <?php foreach($nutris as $row) : $nutri_id = $row->id; ?>

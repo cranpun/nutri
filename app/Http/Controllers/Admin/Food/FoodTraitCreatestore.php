@@ -14,7 +14,8 @@ trait FoodTraitCreatestore
         $data = $request->all();
         $valorg = \App\Models\Food::validaterule();
         $val = [
-            "name" => $valorg["name"],
+            "name" => "{$valorg['name']}|unique:food", // 登録時はユニーク
+            "kana" => "{$valorg['kana']}|unique:food", // 登録時はユニーク
         ];
         \Validator::make($data, $val)->validate();
 
