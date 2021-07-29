@@ -21,6 +21,12 @@
 </section>
 <form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing'])) }}">
     @csrf
+    <div class="field">
+        <div class="control">
+            <button id="act-submit-top" type="submit" class="button">更新</button>
+        </div>
+    </div>
+
     <table id="lunchtable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed">
         <thead>
             <tr>

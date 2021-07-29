@@ -62,6 +62,7 @@ trait MenuTraitUpdate
     private function update_loadFoods()
     {
         $q = \App\Models\Food::query();
+        $q->orderBy("favorite", "ASC");
         $q->orderBy("kana", "ASC");
         $raws = $q->get();
         $ret = [];
