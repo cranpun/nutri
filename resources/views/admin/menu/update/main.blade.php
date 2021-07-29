@@ -21,14 +21,14 @@
 </section>
 <form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing'])) }}">
     @csrf
-    <table id="lunchtable" class="table is-fullwidth is-narrow is-bordered is-striped">
+    <table id="lunchtable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed">
         <thead>
             <tr>
-                <th>食材</th>
-                <th>カテゴリ</th>
+                <th style="width: 100px;">食材</th>
+                <th style="width: 50px;">カテゴリ</th>
                 <?php foreach($rows as $idx => $row) : ?>
-                <td id="d-{{ $idx }}" class="d-name">
-                    <input type="text" name="name[{{$idx}}]" id="name_{{$idx}}" value='{{ old("name[{$idx}]", $row["name"]) }}'>
+                <td id="d-{{ $idx }}" class="d-name" style="width: 80px;">
+                    <input type="text" name="name[{{$idx}}]" id="name_{{$idx}}" value='{{ old("name[{$idx}]", $row["name"]) }}' style="width: 100%">
                 </td>
                 <?php endforeach; ?>
             </tr>
@@ -36,7 +36,7 @@
         <tbody>
             <?php foreach($foods as $food) : ?>
             <tr class="{{ $food->bgcolor }}">
-                <th class="nowrap">{{ in_array($food->id, $recomandfoods) ? "★" : "　"  }}{{ $food->name }}</th>
+                <th class="">{{ in_array($food->id, $recomandfoods) ? "★" : "　"  }}{{ $food->name }}</th>
                 <th class="nowrap">{{ (new \App\L\FoodCategory())->label($food->category) }}</th>
                 <?php foreach($rows as $idx => $row) : ?>
                     <td id="d-menufood-{{ $food->id }}" class="d-menufood has-text-centered">
