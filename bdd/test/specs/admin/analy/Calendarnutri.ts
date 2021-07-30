@@ -26,15 +26,21 @@ export class Calendarnutri extends BddSpec {
         // 確認
         // **********************************************************
         // 今回追加したユーザとデフォルトのユーザ
-        await this.testTextval(`#d-date-1-${date}`, "4", browser);
-        await this.testTextval(`#d-date-4-${date}`, "2", browser);
-        await this.testTextval(`#d-date-5-${date}`, "2", browser);
+        await this.testTextval(`#d-date-1-${date}`, "6", browser);
+        await this.testTextval(`#d-date-2-${date}`, "2", browser);
+        await this.testTextval(`#d-date-3-${date}`, "2", browser);
+        await this.testTextval(`#d-date-4-${date}`, "4", browser);
         await this.testTextval(`#d-date-8-${date}`, "4", browser);
+        await this.testTextval(`#d-date-12-${date}`, "2", browser);
         await this.testTextval(`#d-date-13-${date}`, "2", browser);
+        await this.testTextval(`#d-date-14-${date}`, "2", browser);
+        await this.testTextval(`#d-date-16-${date}`, "2", browser);
         await this.testTextval(`#d-date-18-${date}`, "2", browser);
         await this.testTextval(`#d-date-19-${date}`, "2", browser);
         await this.testTextval(`#d-date-23-${date}`, "2", browser);
         await this.testTextval(`#d-date-25-${date}`, "4", browser);
+        await this.testTextval(`#d-date-27-${date}`, "2", browser);
         await this.testTextval(`#d-date-31-${date}`, "2", browser);
+        await this.testTextval(`#d-date-32-${date}`, "2", browser);
     }
 }

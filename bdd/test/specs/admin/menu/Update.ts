@@ -29,14 +29,16 @@ export class Update extends BddSpec {
         // データ設定
         // **********************************************************
         await browser.type(`#name_0`, "bdd_menu1");
+        await browser.type(`#memo_0`, "bdd_memo1");
         await browser.click("#menufood_0_2");
         await browser.click("#menufood_0_3");
-        await browser.click("#menufood_0_56");
+        await browser.click("#menufood_0_1");
 
         await browser.type(`#name_1`, "bdd_menu2");
+        await browser.type(`#memo_1`, "bdd_memo2");
         await browser.click("#menufood_1_2");
         await browser.click("#menufood_1_3");
-        await browser.click("#menufood_1_56");
+        await browser.click("#menufood_1_1");
 
         // 保存
         await browser.move([

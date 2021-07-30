@@ -26,8 +26,8 @@ export class Calendarfood extends BddSpec {
         // 確認
         // **********************************************************
         // 今回追加したユーザとデフォルトのユーザ
+        await this.testTextval(`#d-date-1-${date}`, "2", browser);
         await this.testTextval(`#d-date-2-${date}`, "2", browser);
         await this.testTextval(`#d-date-3-${date}`, "2", browser);
-        await this.testTextval(`#d-date-56-${date}`, "2", browser);
     }
 }

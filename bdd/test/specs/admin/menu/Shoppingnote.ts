@@ -25,9 +25,9 @@ export class Shoppingnote extends BddSpec {
         // 確認
         // **********************************************************
         // 今回追加したユーザとデフォルトのユーザ
-        await this.testCount(`.d-name`, 3, browser);
-        await this.testTextval(`#d-name-${id}`, "卵", browser);
+        await this.testCount(`.d-food_name`, 3, browser);
+        await this.testTextval(`#d-food_name-${id}`, "卵", browser);
         await this.testTextval(`#d-category-${id}`, "その他", browser);
-        await this.testTextval(`#d-count-${id}`, "2", browser);
+        await this.testTextval(`#d-count-${id} .val`, "2", browser);
     }
 }

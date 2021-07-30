@@ -12,7 +12,7 @@ export class Delete extends BddSpec {
         return null;
     }
     public async spec(browser: BddBrowser): Promise<void> {
-        const id = 125;
+        const id = 4;
 
         // **********************************************************
         // 移動とデータ設定

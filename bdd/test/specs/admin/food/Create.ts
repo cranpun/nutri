@@ -23,6 +23,7 @@ export class Create extends BddSpec {
         // データ設定
         // **********************************************************
         await browser.type(`#name`, "bdd_test_food");
+        await browser.type(`#kana`, "bdd_test_food_kana");
 
         // 保存
         await browser.move([
@@ -41,9 +42,9 @@ export class Create extends BddSpec {
             new BddLink("#act-submit", `#contents-admin-${this.controller}-index`),
         ]);
 
-        // ユーザとしては2番目
-        const id = "125";
+        const id = "4";
         await this.testTextval(`#d-name-${id}`, "bdd_test_food", browser);
+        await this.testTextval(`#d-kana-${id}`, "bdd_test_food_kana", browser);
         await this.testTextval(`#d-category-${id}`, "その他", browser);
         await this.testExist(`#d-foodnutri-${id}-1`, browser);
         await this.testExist(`#d-foodnutri-${id}-2`, browser);

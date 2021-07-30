@@ -12,7 +12,7 @@ export class Update extends BddSpec {
         return ["admin/ZzzFoodSpecgroup/Create"]; // 削除等は飛ばす
     }
     public async spec(browser: BddBrowser): Promise<void> {
-        const id = 125;
+        const id = 4;
 
         // **********************************************************
         // 移動とデータ設定
