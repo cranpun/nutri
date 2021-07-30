@@ -19,7 +19,7 @@
     @include("admin.menu.update.lacknutris", ["lacknutris" => $lacknutris])
     <hr />
 </section>
-<form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing'])) }}">
+<form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing']) + $srch) }}">
     @csrf
     <div class="field">
         <div class="control">

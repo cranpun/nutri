@@ -29,7 +29,8 @@ trait MenuTraitUpdatestore
         });
 
         if ($trans) {
-            return redirect()->route("admin-menu-index")->with("message-success", "更新しました。");
+            $srch = $this->index_srch($request); // ※indexの関数。trait外呼び出しなので注意。
+            return redirect()->route("admin-menu-index", $srch)->with("message-success", "更新しました。");
         } else {
             \U::invokeErrorValidate($request, "保存に失敗しました。{$trans->message()}");
         }

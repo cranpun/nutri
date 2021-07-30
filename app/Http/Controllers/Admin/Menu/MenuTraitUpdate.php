@@ -11,7 +11,9 @@ trait MenuTraitUpdate
         $foods = $this->update_loadFoods();
         $menufoods = $this->update_loadMenufoods($rows, $foods);
         $lackrecomand = $this->update_loadLackRecomand($servedate);
-        return view("admin.menu.update.main", compact(["rows", "menufoods", "foods", "servedate", "timing", "menumax"]) + $lackrecomand);
+        $srch = $this->index_srch($request); // ※indexの関数。trait外呼び出しなので注意。
+
+        return view("admin.menu.update.main", compact(["rows", "menufoods", "foods", "servedate", "timing", "menumax", "srch"]) + $lackrecomand);
     }
 
     // *************************************
