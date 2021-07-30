@@ -12,6 +12,7 @@ trait MenuTraitUpdatestore
         $trans = \DB::transaction(function () use ($request, $servedate, $timing) {
             $data = $request->all();
             $names = array_key_exists("name", $data) ? $data["name"] : [];
+            $memos = array_key_exists("memo", $data) ? $data["memo"] : [];
             $menufoods = array_key_exists("menufood", $data) ? $data["menufood"] : [];
 
             // 日付とタイミングの検証
@@ -22,7 +23,7 @@ trait MenuTraitUpdatestore
             ];
             \Validator::make(compact(["servedate", "timing"]), $val_common)->validate();
 
-            $menu_ids = $this->updatestore_procMenu($servedate, $timing, $names);
+            $menu_ids = $this->updatestore_procMenu($servedate, $timing, $names, $memos);
             $this->updatestore_procMenufood($menu_ids, $menufoods);
 
             return true;
@@ -39,7 +40,7 @@ trait MenuTraitUpdatestore
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function updatestore_procMenu($servedate, $timing, $names): array
+    private function updatestore_procMenu($servedate, $timing, $names, $memos): array
     {
         // まずは該当するメニューを保持。menufoodクリアのため。
         $q_old = \App\Models\Menu::query();
@@ -60,13 +61,15 @@ trait MenuTraitUpdatestore
         // servedateとtimingは呼び出し元で検証済み
         $val_now = [
             "name" => $val["name"],
+            "memo" => $val["memo"],
         ];
         foreach ($names as $idx => $name) {
             if ($name && strlen($name) > 0) {
+                $memo = array_key_exists($idx, $memos) ? $memos[$idx] : "";
                 $ent = new \App\Models\Menu();
-                // amountは未使用なので0固定。
                 \validator::make(["name" => $name], $val_now)->validate();
                 $ent->name = $name;
+                $ent->memo = $memo;
                 $ent->servedate = $servedate;
                 $ent->timing = $timing;
                 $ent->save();

@@ -28,13 +28,14 @@ trait MenuTraitUpdate
         $q->select([
             "menu.id AS id",
             "menu.name AS name",
+            "menu.memo AS memo",
         ]);
         $raws = $q->get();
 
         // 最大数まで補完
         $ret = [];
         for ($i = 0; $i < $menumax; $i++) {
-            $ret[] = count($raws) > $i ? $raws[$i] : ["name" => "", "id" => 0];
+            $ret[] = count($raws) > $i ? $raws[$i] : ["name" => "", "memo" => "", "id" => 0];
         }
 
         return $ret;

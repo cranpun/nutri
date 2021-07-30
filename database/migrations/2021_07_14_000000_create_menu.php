@@ -16,6 +16,7 @@ class CreateMenu extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->id();
             $table->string("name")->comment("名前");
+            $table->string("memo")->comment("メモ")->nullable();
             $table->date("servedate")->comment("提供日");
             $table->string("timing")->comment("lunch/dinner");
             $table->timestamps();

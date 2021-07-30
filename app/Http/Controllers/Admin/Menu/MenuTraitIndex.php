@@ -38,6 +38,7 @@ trait MenuTraitIndex
         $q->select([
             "menu.id AS id",
             "menu.name AS name",
+            "menu.memo AS memo",
             "menu.servedate AS servedate",
             "menu.timing AS timing",
         ]);

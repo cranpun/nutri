@@ -20,6 +20,7 @@ trait FoodTraitCreatestore
         \Validator::make($data, $val)->validate();
 
         $row->name = $data["name"];
+        $row->kana = $data["kana"];
         $row->category = \App\L\FoodCategory::ID_ETC;
         $row->favorite = 100;
 
