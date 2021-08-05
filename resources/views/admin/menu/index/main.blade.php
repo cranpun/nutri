@@ -25,7 +25,6 @@ use \App\Http\Controllers\Admin\Menu\MenuController;
     @include("admin.menu.index.filter", compact(["srch"]))
 </div>
 
-
 <?php
 $today = \Carbon\Carbon::today()->format("Y-m-d");
 ?>

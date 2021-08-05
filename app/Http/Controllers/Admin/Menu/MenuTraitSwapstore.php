@@ -9,8 +9,8 @@ trait MenuTraitSwapstore
     public function swapstore(\Illuminate\Http\Request $request, $servedate, $timing, $dir)
     {
         // 複数回の変更があるためtransaction
-        $trans = \DB::transaction(function () use ($request, $servedate, $timing, $dir) {
-            $swapdate = $this->swapstore_dirdate($servedate, $dir);
+        $swapdate = $this->swapstore_dirdate($servedate, $dir);
+        $trans = \DB::transaction(function () use ($request, $servedate, $timing, $swapdate) {
 
             $serveids = $this->swapstore_loadids($servedate, $timing);
             $swapids = $this->swapstore_loadids($swapdate, $timing);
@@ -24,7 +24,8 @@ trait MenuTraitSwapstore
 
         if ($trans) {
             $srch = $this->index_srch($request); // ※indexの関数。trait外呼び出しなので注意。
-            return redirect()->route("admin-menu-index", $srch)->with("message-success", "更新しました。");
+            $ankerdate = strtotime($servedate) > strtotime($swapdate) ? $servedate : $swapdate; // 上の日付
+            return redirect()->to(route("admin-menu-index", $srch) . "#row-{$ankerdate}")->with("message-success", "更新しました。");
         } else {
             \U::invokeErrorValidate($request, "保存に失敗しました。{$trans->message()}");
         }
