@@ -30,6 +30,7 @@
     <table id="lunchtable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed">
         <thead>
             <tr>
+                <th style="width: 15px;"></th>
                 <th style="width: 100px;">食材</th>
                 <th style="width: 50px;">カテゴリ</th>
                 <?php foreach($rows as $idx => $row) : ?>
@@ -43,6 +44,7 @@
         <tbody>
             <?php foreach($foods as $food) : ?>
             <tr class="{{ $food->bgcolor }}">
+                <th class="">{{ mb_substr($food->kana, 0, 1) }}</th>
                 <th class="">{{ in_array($food->id, $recomandfoods) ? "★" : "　"  }}{{ $food->name }}</th>
                 <th class="nowrap">{{ (new \App\L\FoodCategory())->label($food->category) }}</th>
                 <?php foreach($rows as $idx => $row) : ?>
