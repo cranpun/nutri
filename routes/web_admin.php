@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\User\UserController;
 use \App\Http\Controllers\Admin\Food\FoodController;
 use \App\Http\Controllers\Admin\Menu\MenuController;
+use \App\Http\Controllers\Admin\Recipe\RecipeController;
 use \App\Http\Controllers\Admin\Analy\AnalyController;
 
 Route::middleware(["can:admin","auth"])->group(function () {
@@ -38,6 +39,15 @@ Route::middleware(["can:admin","auth"])->group(function () {
     Route::get("/menu/update/{servedate}/{timing}", [MenuController::class, "update"])->name("admin-menu-update");
     Route::post("/menu/updatestore/{servedate}/{timing}", [MenuController::class, "updatestore"])->name("admin-menu-updatestore");
     Route::post("/menu/swapstore/{servedate}/{timing}/{dir}", [MenuController::class, "swapstore"])->name("admin-menu-swapstore");
+
+    // **************************************************************
+    // recipe
+    // **************************************************************
+    Route::post("/recipe/createstore", [RecipeController::class, "createstore"])->name("admin-recipe-createstore");
+    Route::post("/recipe/delete/{recipe_id}", [RecipeController::class, "delete"])->name("admin-recipe-delete");
+    Route::get("/recipe/index", [RecipeController::class, "index"])->name("admin-recipe-index");
+    Route::get("/recipe/update/{recipe_id}", [RecipeController::class, "update"])->name("admin-recipe-update");
+    Route::post("/recipe/updatestore/{recipe_id}", [RecipeController::class, "updatestore"])->name("admin-recipe-updatestore");
 
     // **************************************************************
     // analy
