@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait UserTraitChangepassword
 {
-    public function changepassword(Request $request, $user_id)
+    public function changepassword(Request $request, string $user_id) : \Illuminate\Http\RedirectResponse
     {
         $user = \Auth::user();
         $validate = [
@@ -13,12 +13,12 @@ trait UserTraitChangepassword
         ];
         try {
             $request->validate($validate);
-        }catch(Exception $e) {
+        }catch(\Exception $e) {
             \U::invokeErrorValidate($request, "ご利用できないパスワードです。");
         }
 
         $password = $request->input("password");
-        $row = \App\Models\User::find($user_id);
+        $row = \App\Models\User::where("id", "=", $user_id)->get()->toArray()[0];
         if(!$row->saveProc(["password" => $password])) {
             // 保存失敗
             \U::invokeErrorValidate($request, "保存に失敗しました。");

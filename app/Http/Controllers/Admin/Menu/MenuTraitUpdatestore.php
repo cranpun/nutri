@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait MenuTraitUpdatestore
 {
-    public function updatestore(\Illuminate\Http\Request $request, $servedate, $timing)
+    public function updatestore(\Illuminate\Http\Request $request, string $servedate, string $timing) : ?\Illuminate\Http\RedirectResponse
     {
         // 複数回の変更があるためtransaction
         $trans = \DB::transaction(function () use ($request, $servedate, $timing) {
@@ -33,14 +33,15 @@ trait MenuTraitUpdatestore
             $srch = $this->index_srch($request); // ※indexの関数。trait外呼び出しなので注意。
             return redirect()->to(route("admin-menu-index", $srch) . "#row-{$servedate}")->with("message-success", "更新しました。");
         } else {
-            \U::invokeErrorValidate($request, "保存に失敗しました。{$trans->message()}");
+            \U::invokeErrorValidate($request, "保存に失敗しました。");
+            return null;
         }
     }
 
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function updatestore_procMenu($servedate, $timing, $names, $memos): array
+    private function updatestore_procMenu(string $servedate, string $timing, array $names, array $memos): array
     {
         // まずは該当するメニューを保持。menufoodクリアのため。
         $q_old = \App\Models\Menu::query();
@@ -80,7 +81,7 @@ trait MenuTraitUpdatestore
         return compact(["newids", "oldids"]);
     }
 
-    private function updatestore_procMenufood($menu_ids, $menufoods)
+    private function updatestore_procMenufood(array $menu_ids, array $menufoods) : void
     {
         // まずはmenu_ids["oldids"]に従って古いfoodmenuを削除
         \App\Models\Menufood::whereIn("menu_id", $menu_ids["oldids"])->delete();

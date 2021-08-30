@@ -15,7 +15,7 @@ class Nutri extends Model
         "id"
     ];
 
-    public static function validaterule()
+    public static function validaterule() : array
     {
         return [
             "name" => "required|string",
@@ -24,7 +24,7 @@ class Nutri extends Model
         ];
     }
 
-    public static function loadAll()
+    public static function loadAll() : array
     {
         $q = \App\Models\Nutri::query();
         $q->orderBy("pos", "ASC");

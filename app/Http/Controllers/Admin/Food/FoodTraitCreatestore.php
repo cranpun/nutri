@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait FoodTraitCreatestore
 {
-    public function createstore(\Illuminate\Http\Request $request)
+    public function createstore(\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse
     {
         $data = $request->all();
         $id = array_key_exists("id", $data) ? $data["id"] : null;

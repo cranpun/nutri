@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Pub\User;
 
 trait UserTraitAuthenticate
 {
-    public function authenticate(\Illuminate\Http\Request $request)
+    public function authenticate(\Illuminate\Http\Request $request) : ?\Illuminate\Http\RedirectResponse
     {
         $credentials = $request->only("name", "password");
         $res = \Auth::attempt($credentials);
@@ -17,6 +17,7 @@ trait UserTraitAuthenticate
         } else {
             // ログイン失敗のため、強制的にバリデーションエラーを発生。
             \U::invokeErrorValidate($request, "ログインに失敗しました。");
+            return null;
         }
     }
 

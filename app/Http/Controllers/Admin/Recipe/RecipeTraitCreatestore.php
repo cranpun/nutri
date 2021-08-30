@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait RecipeTraitCreatestore
 {
-    public function createstore(\Illuminate\Http\Request $request)
+    public function createstore(\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse
     {
         $data = $request->all();
 

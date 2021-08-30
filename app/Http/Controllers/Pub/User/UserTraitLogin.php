@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Pub\User;
 
 trait UserTraitLogin
 {
-    public function login()
+    public function login() : Object
     {
         if(\App\Models\User::isLogin()) {
             // ログイン済みなのでリダイレクト

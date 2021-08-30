@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait RecipeTraitUpdatestore
 {
-    public function updatestore(\Illuminate\Http\Request $request, $recipe_id)
+    public function updatestore(\Illuminate\Http\Request $request, string $recipe_id) : ?\Illuminate\Http\RedirectResponse
     {
         // 複数回の変更があるためtransaction
         $trans = \DB::transaction(function () use ($request, $recipe_id) {
@@ -16,7 +16,7 @@ trait RecipeTraitUpdatestore
             $val = \App\Models\Recipe::validaterule();
             \Validator::make($data, $val)->validate();
 
-            $row = \App\Models\Recipe::where("id", "=", $recipe_id)->first();
+            $row = \App\Models\Recipe::where("id", "=", $recipe_id)->get()->toArray()[0];
             $row->name = $row["name"];
             $row->category = $row["category"];
             $row->url = $data["url"];
@@ -35,7 +35,8 @@ trait RecipeTraitUpdatestore
         if ($trans) {
             return redirect()->route("admin-recipe-index")->with("message-success", "更新しました。");
         } else {
-            \U::invokeErrorValidate($request, "保存に失敗しました。{$trans->message()}");
+            \U::invokeErrorValidate($request, "保存に失敗しました。");
+            return null;
         }
     }
 

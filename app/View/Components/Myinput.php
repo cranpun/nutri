@@ -6,20 +6,20 @@ use Illuminate\View\Component;
 
 class Myinput extends Component
 {
-    public $field;
-    public $cssid;
-    public $errorfield;
-    public $label;
-    public $type;
-    public $placeholder;
-    public $defval;
+    public string $field;
+    public string $cssid;
+    public string $errorfield;
+    public string $label;
+    public string $type;
+    public string $placeholder;
+    public string $defval;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($field, $label, $type, $defval, $placeholder)
+    public function __construct(string $field, string $label, string $type, string $defval, string $placeholder)
     {
         $this->field = $field;
         $this->cssid = \U::safeArrayname($field, "_");

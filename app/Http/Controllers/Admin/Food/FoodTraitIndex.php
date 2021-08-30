@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait FoodTraitIndex
 {
-    public function index(Request $request)
+    public function index(Request $request) : \Illuminate\View\View
     {
         $q = \App\Models\Food::query();
         $q->select([
@@ -25,7 +25,7 @@ trait FoodTraitIndex
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
 
-    private function index_make($rows)
+    private function index_make(\Illuminate\Support\Collection $rows) : array
     {
         $ret = [];
         foreach($rows as $row) {
@@ -36,7 +36,7 @@ trait FoodTraitIndex
         return $ret;
     }
 
-    private function index_loadNutri($food_id)
+    private function index_loadNutri(int $food_id) : array
     {
         $q = \App\Models\Foodnutri::query();
         $q->join("nutri", "nutri.id", "foodnutri.nutri_id");
@@ -50,12 +50,12 @@ trait FoodTraitIndex
 
         $ret = [];
         foreach($rows as $row) {
-            $ret[$row->id] = $row->name;
+            $ret[$row->id] = $row["name"];
         }
         return $ret;
     }
 
-    private function index_favoritecolor($fav) 
+    private function index_favoritecolor(int $fav) : string
     {
         $colors = [
             0 => "has-background-primary-light favorite",

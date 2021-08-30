@@ -4,17 +4,18 @@ namespace App\U;
 
 
 class U {
-    public static function invokeErrorValidate($request, $message)
+    public static function invokeErrorValidate(\Illuminate\Http\Request $request, string $message) : void
     {
         if($message != null) {
             $request->session()->flash("message-error", $message);
+            \Log::channel("myerror")->debug("invokeErrorValidate : {$message}");
         }
         $validate = [
             "dummy" => "required"
         ];
         $request->validate($validate);
     }
-    public static function toAssoc($rows, $clmid = "id", $clmname = "name")
+    public static function toAssoc(array $rows, string $clmid = "id", string $clmname = "name") : array
     {
         // 連想配列に変換
         $ret = [];
@@ -23,33 +24,37 @@ class U {
         }
         return $ret;
     }
-    public static function query2array($q)
+    public static function query2array(\Illuminate\Database\Query\Builder $q) : array
     {
         $ret = $q->get()->map(function($item) {
             return (array)$item;
         })->all();
         return $ret;
     }
-    public static function getd($key, $array, $def) {
+    public static function getd(mixed $key, array $array, mixed $def) : string
+    {
         $arr = (array)$array;
         $ret = array_key_exists($key, $arr) ? $arr[$key] : $def;
         return $ret;
     }
-    public static function vald($val, $def) {
+    public static function vald(mixed $val, mixed $def) : mixed
+    {
         $ret = $val ? $val : $def;
         return $ret;
     }
     /**
      * 配列nameを安全な内容に変更
      */
-    public static function safeArrayname($name, $replace) {
+    public static function safeArrayname(string $name, string $replace) : string
+    {
         $ret = str_replace("[", $replace, str_replace("]", "", $name));
         return $ret;
     }
-    public static function publicfiletimelink($filepath) {
+    public static function publicfiletimelink(string $filepath) : string
+    {
         return asset($filepath) . '?v=' . filemtime(join(DIRECTORY_SEPARATOR, [public_path(), $filepath]));
     }
-    public static function toSql(\Illuminate\Database\Eloquent\Builder $q)
+    public static function toSql(\Illuminate\Database\Eloquent\Builder $q) : string
     {
         return vsprintf(
             str_replace('?', '%s', $q->toSql()),

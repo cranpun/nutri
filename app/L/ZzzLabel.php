@@ -12,12 +12,12 @@ abstract class ZzzLabel
     /**
      * id, nameの連想配列の配列を返す
      */
-    abstract public function labels();
+    abstract public function labels() : array;
 
     /**
      * コンストラクタで指定されたallの設定に従ってlabel連想配列の配列を返す
      */
-    public function labelsAll()
+    public function labelsAll() : array
     {
         $ret = array_merge([
             self::ID_ALL => "（全て）"
@@ -25,9 +25,10 @@ abstract class ZzzLabel
         return $ret;
     }
 
-    public function labelObjs()
+    public function labelObjs() : array
     {
         $labels = $this->labels();
+        $ret = [];
         foreach($labels as $key => $label) {
             $ret[] = [
                 "id" => $key,
@@ -37,9 +38,10 @@ abstract class ZzzLabel
 
         return $ret;
     }
-    public function labelObjsAll()
+    public function labelObjsAll() : array
     {
         $labels = $this->labelsAll();
+        $ret = [];
         foreach($labels as $key => $label) {
             $ret[] = [
                 "id" => $key,
@@ -52,10 +54,10 @@ abstract class ZzzLabel
 
     /**
      * sqlのcase節を生成。
-     * @param $clm caseに適応するテーブルのカラム
-     * @param $field ASの名前
+     * @param string $clm caseに適応するテーブルのカラム
+     * @param string $alias string ASの名前
      */
-    public function sqlCase($clm, $alias)
+    public function sqlCase(string $clm, string $alias) : string
     {
         $case = "";
         foreach ($this->labels() as $key => $label) {
@@ -68,7 +70,7 @@ abstract class ZzzLabel
     /**
      * 対応するラベルを取得
      */
-    public function label($id)
+    public function label(string $id) : string
     {
         $labels = $this->labels();
         $ret = array_key_exists($id, $labels) ? $labels[$id] : "（未設定）";

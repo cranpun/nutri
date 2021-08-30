@@ -14,7 +14,7 @@ class Menufood extends Model
     protected $guarded = [
         "id"
     ];
-    public static function validaterule()
+    public static function validaterule() : array
     {
         return [
             "menu_id" => "required|integer",

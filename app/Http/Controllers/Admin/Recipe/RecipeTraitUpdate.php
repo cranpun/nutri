@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Admin\Recipe;
 
 trait RecipeTraitUpdate
 {
-    public function update(\Illuminate\Http\Request $request, $recipe_id)
+    public function update(\Illuminate\Http\Request $request, string $recipe_id) : \Illuminate\View\View
     {
         $row = \App\Models\Recipe::where("id", "=", $recipe_id)->first();
         $category = (new \App\L\RecipeCategory())->labelObjs();

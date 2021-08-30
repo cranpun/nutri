@@ -6,20 +6,20 @@ use Illuminate\View\Component;
 
 class Myselect extends Component
 {
-    public $field;
-    public $cssid;
-    public $errorfield;
-    public $label;
-    public $options;
-    public $defval;
-    public $filter;
+    public string $field;
+    public string $cssid;
+    public string $errorfield;
+    public string $label;
+    public array $options;
+    public string $defval;
+    public string $filter;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($field, $label, $options, $defval, $enablefilter = false)
+    public function __construct(string $field, string $label, array $options, string $defval, bool $enablefilter = false)
     {
         $this->field = $field;
         $this->cssid = \U::safeArrayname($field, "_");
@@ -57,7 +57,7 @@ class Myselect extends Component
 blade;
     }
 
-    private function filter($enablefilter)
+    private function filter(bool $enablefilter) : string
     {
         if(!$enablefilter) {
             return "";

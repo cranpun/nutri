@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait AnalyTraitCalendarfood
 {
-    public function calendarfood(\Illuminate\Http\Request $request)
+    public function calendarfood(\Illuminate\Http\Request $request) : \Illuminate\View\View
     {
         $NAME_START = "startdate";
         $NAME_END = "enddate";
@@ -26,17 +26,17 @@ trait AnalyTraitCalendarfood
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function calendarfood_srch($request, $NAME_START, $NAME_END)
+    private function calendarfood_srch(\Illuminate\Http\Request $request, string $NAME_START, string $NAME_END): array
     {
         $range = config("myconf.nutrioffset");
         $srch = [
-            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDay($range * -1)->format("Y-m-d")),
-            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDay($range * 1)->format("Y-m-d")),
+            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDays(intval($range * -1))->format("Y-m-d")),
+            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDays(intval($range * 1))->format("Y-m-d")),
         ];
         return $srch;
     }
 
-    private function calendarfood_foods()
+    private function calendarfood_foods(): array
     {
         $q = \App\Models\Food::query();
         $q->select([
@@ -56,7 +56,7 @@ trait AnalyTraitCalendarfood
         return $ret;
     }
 
-    private function calendarfood_initdata($foods, $period)
+    private function calendarfood_initdata(array $foods, array $period) : array
     {
         $ret = [];
         foreach ($foods as $food) {
@@ -70,7 +70,7 @@ trait AnalyTraitCalendarfood
         return $ret;
     }
 
-    private function calendarfood_load($srch, $NAME_START, $NAME_END)
+    private function calendarfood_load(array $srch, string $NAME_START, string $NAME_END) : \Illuminate\Support\Collection
     {
         $q = \App\Models\Menufood::query();
         $q->join("menu", "menu.id", "=", "menufood.menu_id");
@@ -84,7 +84,7 @@ trait AnalyTraitCalendarfood
         return $raws;
     }
 
-    private function calendarfood_make($raws, $rows)
+    private function calendarfood_make(\Illuminate\Support\Collection $raws, array $rows) : array
     {
         foreach ($raws as $raw) {
             $food_id = $raw->food_id;

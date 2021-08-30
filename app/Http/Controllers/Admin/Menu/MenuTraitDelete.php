@@ -5,17 +5,21 @@ use Illuminate\Http\Request;
 
 trait MenuTraitDelete
 {
-    public function delete(Request $request, $Menu_id)
+    public function delete(Request $request, string $Menu_id) : ?\Illuminate\Http\RedirectResponse
     {
         $row = \App\Models\Menu::find($Menu_id);
 
         // ユーザ削除はactiveをoffに。
-        if(!$row->delete()) {
-            // 保存失敗
-            \U::invokeErrorValidate($request, "削除に失敗しました。");
+        if($row) {
+            if(!$row->delete()) {
+                // 保存失敗
+                \U::invokeErrorValidate($request, "削除に失敗しました。");
+            }
+            // それぞれのroleに応じた一覧へ移動。
+            return redirect()->route("admin-Menu-index")->with("message-success", "削除しました。");
         }
-        // それぞれのroleに応じた一覧へ移動。
-        return redirect()->route("admin-Menu-index")->with("message-success", "削除しました。");
+
+        return null;
     }
 
     // *************************************

@@ -12,7 +12,7 @@ class FoodCategory extends ZzzLabel
     const ID_FRUIT = "fruit";
     const ID_ETC = "etc";
 
-    public function labels()
+    public function labels() : array
     {
         return [
             self::ID_VEGETABLE => "野菜",

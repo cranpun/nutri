@@ -12,7 +12,7 @@ class RecipeCategory extends ZzzLabel
     const ID_CHSUB = "chsub";
     const ID_ETC = "etc";
 
-    public function labels()
+    public function labels() : array
     {
         return [
             self::ID_JPMAIN => "和食：主菜",

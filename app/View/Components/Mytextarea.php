@@ -6,20 +6,20 @@ use Illuminate\View\Component;
 
 class Mytextarea extends Component
 {
-    public $field;
-    public $cssid;
-    public $errorfield;
-    public $label;
-    public $type;
-    public $placeholder;
-    public $defval;
+    public string $field;
+    public string $cssid;
+    public string $errorfield;
+    public string $label;
+    public string $type;
+    public string $placeholder;
+    public string $defval;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($field, $label, $defval)
+    public function __construct(string $field, string $label, string $defval)
     {
         $this->field = $field;
         $this->cssid = \U::safeArrayname($field, "_");

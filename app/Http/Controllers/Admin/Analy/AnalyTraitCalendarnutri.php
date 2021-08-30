@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait AnalyTraitCalendarnutri
 {
-    public function calendarnutri(\Illuminate\Http\Request $request)
+    public function calendarnutri(\Illuminate\Http\Request $request) : \Illuminate\View\View
     {
         $NAME_START = "startdate";
         $NAME_END = "enddate";
@@ -26,17 +26,17 @@ trait AnalyTraitCalendarnutri
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function calendarnutri_srch($request, $NAME_START, $NAME_END)
+    private function calendarnutri_srch(\Illuminate\Http\Request $request, string $NAME_START, string $NAME_END) : array
     {
-        $range = config("myconf.nutrioffset");
+        $range = intval(config("myconf.nutrioffset"));
         $srch = [
-            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDay($range * -1)->format("Y-m-d")),
-            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDay($range * 1)->format("Y-m-d")),
+            $NAME_START => $request->query($NAME_START, \Carbon\Carbon::today()->addDays(intval($range * -1))->format("Y-m-d")),
+            $NAME_END => $request->query($NAME_END, \Carbon\Carbon::today()->addDays(intval($range * 1))->format("Y-m-d")),
         ];
         return $srch;
     }
 
-    private function calendarnutri_nutris()
+    private function calendarnutri_nutris() : array
     {
         $q = \App\Models\Nutri::query();
         $q->select([
@@ -53,7 +53,7 @@ trait AnalyTraitCalendarnutri
         return $ret;
     }
 
-    private function calendarnutri_foods($nutri_id)
+    private function calendarnutri_foods(int $nutri_id) : \Illuminate\Support\Collection
     {
         $q = \App\Models\Foodnutri::query();
         $q->join("food", "food.id", "=", "foodnutri.food_id");
@@ -68,7 +68,7 @@ trait AnalyTraitCalendarnutri
         return $raws;
     }
 
-    private function calendarnutri_initdata($nutris, $period)
+    private function calendarnutri_initdata(array $nutris , array $period): array
     {
         $ret = [];
         foreach ($nutris as $nutri) {
@@ -82,7 +82,7 @@ trait AnalyTraitCalendarnutri
         return $ret;
     }
 
-    private function calendarnutri_load($srch, $NAME_START, $NAME_END)
+    private function calendarnutri_load(array $srch, string $NAME_START, string $NAME_END) : \Illuminate\Support\Collection
     {
         $q = \App\Models\Menufood::query();
         $q->join("menu", "menu.id", "=", "menufood.menu_id");
@@ -97,7 +97,7 @@ trait AnalyTraitCalendarnutri
         return $raws;
     }
 
-    private function calendarnutri_make($raws, $rows)
+    private function calendarnutri_make(\Illuminate\Support\Collection $raws, array $rows) : array
     {
         foreach ($raws as $raw) {
             $nutri_id = $raw->nutri_id;

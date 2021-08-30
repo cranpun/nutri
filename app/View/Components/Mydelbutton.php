@@ -6,24 +6,24 @@ use Illuminate\View\Component;
 
 class Mydelbutton extends Component
 {
-    public $url;
-    public $id;
-    public $label;
-    public $cssid;
-    public $csscls;
-    public $postdata;
+    public string $url;
+    public string $id;
+    public string $label;
+    public string $cssid;
+    public string $csscls;
+    public string $postdata;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($url, $id, $label = null, $cssid = null, $csscls = null, $postdata = [])
+    public function __construct(string $url, string $id, string $label = null, string $cssid = null, string $csscls = null, array $postdata = [])
     {
         $this->url = $url;
         $this->id = $id;
         $this->label = $label ? $label : "削除";
-        $this->cssid = $cssid ? $csscls : "act-del-{$id}";
+        $this->cssid = $cssid ? $cssid : "act-del-{$id}";
         $this->csscls = $csscls ? $csscls : " button " ;
         $this->postdata = "";
         foreach($postdata as $name => $data) {

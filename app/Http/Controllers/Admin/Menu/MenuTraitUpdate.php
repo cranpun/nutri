@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Menu;
 
 trait MenuTraitUpdate
 {
-    public function update(\Illuminate\Http\Request $request, $servedate, $timing)
+    public function update(\Illuminate\Http\Request $request, string $servedate, string $timing) : \Illuminate\View\View
     {
         $menumax = config("myconf.menumax");
         $rows = $this->update_loadMenus($servedate, $timing, $menumax);
@@ -19,7 +19,7 @@ trait MenuTraitUpdate
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function update_loadMenus($servedate, $timing, $menumax)
+    private function update_loadMenus(string $servedate, string $timing, string $menumax) : array
     {
         // 昼食と夕食
         $q = \App\Models\Menu::query();
@@ -41,7 +41,7 @@ trait MenuTraitUpdate
         return $ret;
     }
 
-    private function update_loadMenufoods($rows, $foods)
+    private function update_loadMenufoods(array $rows, array $foods) : array
     {
         $ret = [];
         // foodとmenumaxで補完した配列を構成
@@ -62,7 +62,7 @@ trait MenuTraitUpdate
         }
         return $ret;
     }
-    private function update_loadFoods()
+    private function update_loadFoods() : array
     {
         $q = \App\Models\Food::query();
         $q->orderBy("favorite", "ASC");
@@ -77,7 +77,7 @@ trait MenuTraitUpdate
         return $ret;
     }
 
-    private function update_favoritecolor($fav) 
+    private function update_favoritecolor(int $fav) : string
     {
         $colors = [
             0 => "has-background-primary-light",
@@ -89,11 +89,11 @@ trait MenuTraitUpdate
         }
     }
 
-    private function update_loadLackRecomand($servedate)
+    private function update_loadLackRecomand(string $servedate) : array
     {
-        $rangeday = config("myconf.nutrioffset");
-        $startdate = \Carbon\Carbon::parse($servedate)->addDay($rangeday * -1)->format("Y-m-d");
-        $enddate = \Carbon\Carbon::parse($servedate)->addDay($rangeday * 1)->format("Y-m-d");
+        $rangeday = intval(config("myconf.nutrioffset"));
+        $startdate = \Carbon\Carbon::parse($servedate)->addDays(intval($rangeday * -1))->format("Y-m-d");
+        $enddate = \Carbon\Carbon::parse($servedate)->addDays(intval($rangeday * 1))->format("Y-m-d");
 
         // 範囲内で摂取された食材のID
         $rq = \App\Models\Menufood::query();
@@ -144,7 +144,7 @@ trait MenuTraitUpdate
         return compact(["lacknutris", "recomandfoods"]);
     }
 
-    private function update_loadNutrifood($nutri_id)
+    private function update_loadNutrifood(string $nutri_id) : \Illuminate\Support\Collection
     {
         $q = \App\Models\Foodnutri::query();
         $q->join("food", "food.id", "=", "foodnutri.food_id");

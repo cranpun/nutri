@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 trait MenuTraitSwapstore
 {
-    public function swapstore(\Illuminate\Http\Request $request, $servedate, $timing, $dir)
+    public function swapstore(\Illuminate\Http\Request $request, string $servedate, string $timing, string $dir) : ?\Illuminate\Http\RedirectResponse
     {
         // 複数回の変更があるためtransaction
         $swapdate = $this->swapstore_dirdate($servedate, $dir);
-        $trans = \DB::transaction(function () use ($request, $servedate, $timing, $swapdate) {
+        $trans = \DB::transaction(function () use ($servedate, $timing, $swapdate) {
 
             $serveids = $this->swapstore_loadids($servedate, $timing);
             $swapids = $this->swapstore_loadids($swapdate, $timing);
@@ -27,25 +27,26 @@ trait MenuTraitSwapstore
             $ankerdate = strtotime($servedate) > strtotime($swapdate) ? $servedate : $swapdate; // 上の日付
             return redirect()->to(route("admin-menu-index", $srch) . "#row-{$ankerdate}")->with("message-success", "更新しました。");
         } else {
-            \U::invokeErrorValidate($request, "保存に失敗しました。{$trans->message()}");
+            \U::invokeErrorValidate($request, "保存に失敗しました。");
+            return null;
         }
     }
 
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function swapstore_dirdate($servedate, $dir)
+    private function swapstore_dirdate(string $servedate, string $dir) : string
     {
         if ($dir == "up") {
             // 次の日とswap
-            return \Carbon\Carbon::parse($servedate)->addDay(1)->format("Y-m-d");
+            return \Carbon\Carbon::parse($servedate)->addDays(1)->format("Y-m-d");
         } else /* if($dir == "down") */ {
             // 前の日とswap
-            return \Carbon\Carbon::parse($servedate)->addDay(-1)->format("Y-m-d");
+            return \Carbon\Carbon::parse($servedate)->addDays(-1)->format("Y-m-d");
         }
     }
 
-    private function swapstore_loadids($servedate, $timing)
+    private function swapstore_loadids(string $servedate, string $timing) : array
     {
         $q = \App\Models\Menu::query();
         $q->where("servedate", "=", $servedate);
@@ -55,7 +56,7 @@ trait MenuTraitSwapstore
         return $ret;
     }
 
-    private function swapstore_swap($servedate, $ids)
+    private function swapstore_swap(string $servedate, array $ids) : void
     {
         $q = \App\Models\Menu::query();
         $q->whereIn("id", $ids);

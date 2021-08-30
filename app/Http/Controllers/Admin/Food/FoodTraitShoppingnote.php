@@ -5,12 +5,12 @@ use Illuminate\Http\Request;
 
 trait FoodTraitShoppingnote
 {
-    public static $shoppingnote_NAME_FOOD_ID = "food_id";
+    public static string $shoppingnote_NAME_FOOD_ID = "food_id";
 
-    public function shoppingnote(Request $request)
+    public function shoppingnote(\Illuminate\Http\Request $request) : \Illuminate\View\View
     {
         $sdate = \Carbon\Carbon::today()->format("Y-m-d"); // 開始日：本日
-        $edate = \Carbon\Carbon::today()->add(config("myconf.shoppingnoterange"), "day")->format("Y-m-d"); // 2週間先
+        $edate = \Carbon\Carbon::today()->add("day", config("myconf.shoppingnoterange"))->format("Y-m-d"); // 2週間先
         $rows = $this->shoppingnote_load($sdate, $edate);
         $food_ids = $this->shoppingnote_postfoodids($request);
         return view("admin.food.shoppingnote.main", compact(["rows", "sdate", "edate", "food_ids"]));
@@ -19,7 +19,7 @@ trait FoodTraitShoppingnote
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function shoppingnote_load($sdate, $edate)
+    private function shoppingnote_load(string $sdate, string $edate) : array
     {
         $q = \App\Models\Menufood::query();
         $q->join("menu", "menu.id", "=", "menufood.menu_id");
@@ -41,9 +41,9 @@ trait FoodTraitShoppingnote
             if(!array_key_exists($row->food_id, $ret)) {
                 // 初期化
                 $ret[$row->food_id] = [
-                    "food_id" => $row->food_id,
-                    "food_name" => $row->food_name,
-                    "food_category" => $row->food_category,
+                    "food_id" => $row["food_id"],
+                    "food_name" => $row["food_name"],
+                    "food_category" => $row["food_category"],
                     "menus" => [],
                 ];
             }
@@ -53,9 +53,9 @@ trait FoodTraitShoppingnote
         return $ret;
     }
 
-    private function shoppingnote_postfoodids($request)
+    private function shoppingnote_postfoodids(\Illuminate\Http\Request $request) : array
     {
-        $data = $request->query(self::$shoppingnote_NAME_FOOD_ID, []);
+        $data = (array)$request->query(self::$shoppingnote_NAME_FOOD_ID, []);
         $ret = array_keys($data);
         return $ret;
     }

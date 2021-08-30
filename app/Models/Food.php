@@ -15,7 +15,7 @@ class Food extends Model
         "id"
     ];
 
-    public static function validaterule()
+    public static function validaterule() : array
     {
         return [
             "name" => "required|string",

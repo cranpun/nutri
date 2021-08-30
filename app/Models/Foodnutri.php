@@ -15,7 +15,7 @@ class Foodnutri extends Model
         "id"
     ];
 
-    public static function validaterule()
+    public static function validaterule() : array
     {
         return [
             "food_id" => "required|numeric",

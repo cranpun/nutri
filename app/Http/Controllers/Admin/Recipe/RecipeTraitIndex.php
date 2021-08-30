@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait RecipeTraitIndex
 {
-    public function index(Request $request)
+    public function index(Request $request) : \Illuminate\View\View
     {
         $q = \App\Models\Recipe::query();
         $q->select([

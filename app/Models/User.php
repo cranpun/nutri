@@ -42,7 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    static function validaterule() {
+    static function validaterule() : array
+    {
         return [
             "name" => "required|unique:user",
             "display_name" => "required|string",
@@ -56,14 +57,15 @@ class User extends Authenticatable
         ];
     }
 
-    public function saveProc($data)
+    public function saveProc(array $data) : bool
     {
         $this->password = array_key_exists("password", $data) ? \Illuminate\Support\Facades\Hash::make($data['password']) : $this->password;
         $this->name = array_key_exists("name", $data) ? $data["name"] : $this->name;
         $this->display_name = array_key_exists("display_name", $data) ? $data["display_name"] : $this->display_name;
         $this->email = array_key_exists("email", $data) ? $data["email"] : $this->email;
         $this->role = array_key_exists("role", $data) ? $data["role"] : $this->role;
-        $this->last_user_id = \Auth::user()["id"];
+        $user = \Auth::user();
+        $this->last_user_id = $user ? $user->getAuthIdentifier() : 0;
         $ret = $this->save();
         return $ret;
     }
@@ -71,29 +73,29 @@ class User extends Authenticatable
     // *********************************************************************************
     // role
     // *********************************************************************************
-    public function isRoles($roles)
+    public function isRoles(array $roles) : bool
     {
         $ret = in_array($this->role, $roles);
         return $ret;
     }
 
-    public function isAdmin()
+    public function isAdmin() : bool
     {
         return $this->isRoles([\App\L\Role::ID_ADMIN]);
     }
 
-    public static function isPub()
+    public static function isPub() : bool
     {
         $user = \Auth::user();
         return !$user;
     }
 
-    public static function isLogin()
+    public static function isLogin() : bool
     {
         $user = \Auth::user();
-        return $user;
+        return !(!$user);
     }
-    public static function isLoginRoles($roles)
+    public static function isLoginRoles(array $roles) : bool
     {
         $user = \Auth::user();
         if($user) {

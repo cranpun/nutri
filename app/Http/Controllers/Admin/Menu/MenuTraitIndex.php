@@ -5,9 +5,9 @@ use Illuminate\Http\Request;
 
 trait MenuTraitIndex
 {
-    public static $index_NAME_EDATE = "edate";
-    public static $index_NAME_SDATE = "sdate";
-    public function index(Request $request)
+    public static string $index_NAME_EDATE = "edate";
+    public static string $index_NAME_SDATE = "sdate";
+    public function index(Request $request) : \Illuminate\View\View
     {
         $srch = $this->index_srch($request);
         $rows = $this->index_load($srch);
@@ -22,17 +22,17 @@ trait MenuTraitIndex
     /**
      * swapでもsrchを積むのでpublic。
      */
-    public function index_srch($request)
+    public function index_srch(Request $request) : array
     {
-        $range = config("myconf.nutrioffset");
+        $range = intval(config("myconf.nutrioffset"));
         $srch = [
-            self::$index_NAME_SDATE => $request->query(self::$index_NAME_SDATE, \Carbon\Carbon::today()->addDay($range * -1)->format("Y-m-d")),
-            self::$index_NAME_EDATE => $request->query(self::$index_NAME_EDATE, \Carbon\Carbon::today()->addDay($range * 1)->format("Y-m-d")),
+            self::$index_NAME_SDATE => $request->query(self::$index_NAME_SDATE, \Carbon\Carbon::today()->addDays(intval($range * -1))->format("Y-m-d")),
+            self::$index_NAME_EDATE => $request->query(self::$index_NAME_EDATE, \Carbon\Carbon::today()->addDays(intval($range * 1))->format("Y-m-d")),
         ];
         return $srch;
     }
 
-    private function index_load($srch)
+    private function index_load(array $srch) : array
     {
         $q = \App\Models\Menu::query();
         $q->select([
@@ -50,7 +50,7 @@ trait MenuTraitIndex
         return $rows;
     }
 
-    private function index_make($rows, $srch)
+    private function index_make(\Illuminate\Support\Collection $rows, array $srch) : array
     {
         // servedateを補完しつつ、servedate x timingの連想配列を構成
         $period = array_reverse(\Carbon\CarbonPeriod::create($srch[self::$index_NAME_SDATE], $srch[self::$index_NAME_EDATE])->toArray());
@@ -89,7 +89,7 @@ trait MenuTraitIndex
         return $ret;
     }
 
-    private function index_loadFood($menu_id)
+    private function index_loadFood(string $menu_id) : \Illuminate\Support\Collection
     {
         $q = \App\Models\Menufood::query();
         $q->join("food", "food.id", "=", "menufood.food_id");

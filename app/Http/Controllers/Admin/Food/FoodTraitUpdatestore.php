@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait FoodTraitUpdatestore
 {
-    public function updatestore(\Illuminate\Http\Request $request, $food_id)
+    public function updatestore(\Illuminate\Http\Request $request, string $food_id) : ?\Illuminate\Http\RedirectResponse
     {
         // 複数回の変更があるためtransaction
         $trans = \DB::transaction(function () use ($request, $food_id) {
@@ -31,7 +31,7 @@ trait FoodTraitUpdatestore
             $val = \App\Models\Food::validaterule();
             \Validator::make($data, $val)->validate();
 
-            $row = \App\Models\Food::where("id", "=", $food_id)->first();
+            $row = \App\Models\Food::where("id", "=", $food_id)->get()->toArray()[0];
             $row->name = $name;
             $row->kana = array_key_exists("kana", $data) ? $data["kana"] : "";
             $row->category = $data["category"];
@@ -50,14 +50,15 @@ trait FoodTraitUpdatestore
         if ($trans) {
             return redirect()->route("admin-food-index")->with("message-success", "更新しました。");
         } else {
-            \U::invokeErrorValidate($request, "保存に失敗しました。{$trans->message()}");
+            \U::invokeErrorValidate($request, "保存に失敗しました。");
+            return null;
         }
     }
 
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function updatestore_storeFoodnutri($request, $food_id, $nutri_ids) : bool
+    private function updatestore_storeFoodnutri(\Illuminate\Http\Request $request, string $food_id, array $nutri_ids) : bool
     {
         $amount = 0;  // 未使用なので自動設定。
         foreach ($nutri_ids as $nutri_id => $on) {
@@ -66,7 +67,7 @@ trait FoodTraitUpdatestore
 
             $ent = new \App\Models\Foodnutri();
             $ent->food_id = $food_id;
-            $ent->nutri_id = $nutri_id;
+            $ent->nutri_id = (string)$nutri_id;
             $ent->amount = $amount;
 
             if (!$ent->save()) {

@@ -6,16 +6,16 @@ use Illuminate\View\Component;
 
 class Mylabel extends Component
 {
-    public $field;
-    public $label;
-    public $type;
-    public $defval;
+    public string $field;
+    public string $label;
+    public string $type;
+    public string $defval;
 
     /**
      * Create a new component instance.
      * @return void
      */
-    public function __construct($field, $label, $defval)
+    public function __construct(string $field, string $label, string $defval)
     {
         $this->field = $field;
         $this->label = $label;

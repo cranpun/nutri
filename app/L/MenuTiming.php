@@ -8,7 +8,7 @@ class MenuTiming extends ZzzLabel
     const ID_LUNCH = "lunch";
     const ID_BREAKFAST = "breakfast";
 
-    public function labels()
+    public function labels() : array
     {
         return [
             self::ID_DINNER => "夕食",

@@ -5,14 +5,14 @@ use Illuminate\Http\Request;
 
 trait UserTraitUpdatestore
 {
-    public function updatestore(\Illuminate\Http\Request $request)
+    public function updatestore(\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse
     {
         $data = $request->all();
         $id = array_key_exists("id", $data) ? $data["id"] : null;
 
         if($id) {
             // update
-            $row = \App\Models\User::where("id", "=", $id)->first();
+            $row = \App\Models\User::where("id", "=", $id)->get()->toArray()[0];
             // ユーザ名が同じであればuniqueは外す
             $val = \App\Models\User::validaterule();
             if($row["name"] == $data["name"]) {

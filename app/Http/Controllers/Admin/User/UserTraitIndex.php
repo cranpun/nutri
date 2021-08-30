@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait UserTraitIndex
 {
-    public function index(Request $request)
+    public function index(Request $request) : \Illuminate\View\View
     {
         $q = \App\Models\User::query();
         $q->select([
