@@ -19,18 +19,13 @@
     @include("admin.menu.update.lacknutris", ["lacknutris" => $lacknutris])
     <hr />
 </section>
-<form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing']) + $srch) }}">
+<form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing']) + $srch) }}" style="position: relative;">
     @csrf
-    <div class="field">
-        <div class="control">
-            <button id="act-submit-top" type="submit" class="button">更新</button>
-        </div>
-    </div>
 
     <table id="lunchtable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed">
         <thead>
             <tr>
-                <th style="width: 15px;"></th>
+                <th style="width: 35px;"></th>
                 <th style="width: 100px;">食材</th>
                 <th style="width: 50px;">カテゴリ</th>
                 <?php foreach($rows as $idx => $row) : ?>
@@ -57,9 +52,9 @@
         </tbody>
     </table>
 
-    <div class="field">
+    <div style="position: fixed; top: 290px; right: 24px;">
         <div class="control">
-            <button id="act-submit" type="submit" class="button">更新</button>
+            <button id="act-submit" type="submit" class="button is-danger">更新</button>
         </div>
     </div>
 </form>
