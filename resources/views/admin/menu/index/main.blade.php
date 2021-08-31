@@ -71,7 +71,7 @@ $today = \Carbon\Carbon::today()->format("Y-m-d");
     </thead>
     <tbody>
         <?php foreach($rows as $date => $row): ?>
-        <tr id="row-<?= $date ?>" class="{{ $date == $today ? 'has-background-success' : '' }}">
+        <tr id="row-<?= $date ?>" class="{{ $date == $today ? 'has-background-warning' : '' }}">
             <td id="d-servedate-<?= $date ?>" class="d-servedate val"><?= \Carbon\Carbon::parse($date)->format("m/d\n(D)") ?></td>
             <td id="d-lunch-<?= $date ?>" class="d-lunch">
                 @include("admin.menu.index.item", ["servedate" => $date, "srch" => $srch, "timing" => \App\L\MenuTiming::ID_LUNCH, "menus" => $row[\App\L\MenuTiming::ID_LUNCH]])
