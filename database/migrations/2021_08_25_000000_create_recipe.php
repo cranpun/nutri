@@ -21,6 +21,9 @@ class CreateRecipe extends Migration
             $table->text("memo")->comment("メモ")->nullable();
             $table->timestamps();
         });
+        Schema::table('menu', function (Blueprint $table) {
+            $table->unsignedBigInteger("recipe_id")->comment("レシピID")->after("timing");
+        });
     }
 
     /**
@@ -31,5 +34,8 @@ class CreateRecipe extends Migration
     public function down()
     {
         Schema::dropIfExists('recipe');
+        Schema::table('menu', function (Blueprint $table) {
+            $table->dropColumn("recipe_id");
+        });
     }
 }

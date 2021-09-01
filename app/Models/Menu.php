@@ -22,6 +22,7 @@ class Menu extends Model
             "memo" => "string",
             "servedate" => "required|date",
             "timing" => "required|in:" . join(",", array_keys((new \App\L\MenuTiming())->labels())),
+            "recipe_id" => "integer|nullable",
         ];
     }
 }

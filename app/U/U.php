@@ -24,7 +24,7 @@ class U {
         }
         return $ret;
     }
-    public static function query2array(\Illuminate\Database\Query\Builder $q) : array
+    public static function query2array(\Illuminate\Database\Eloquent\Builder $q) : array
     {
         $ret = $q->get()->map(function($item) {
             return (array)$item;

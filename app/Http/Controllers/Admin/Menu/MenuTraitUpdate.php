@@ -12,8 +12,9 @@ trait MenuTraitUpdate
         $menufoods = $this->update_loadMenufoods($rows, $foods);
         $lackrecomand = $this->update_loadLackRecomand($servedate);
         $srch = $this->index_srch($request); // ※indexの関数。trait外呼び出しなので注意。
+        $recipe = $this->upload_loadRecipe();
 
-        return view("admin.menu.update.main", compact(["rows", "menufoods", "foods", "servedate", "timing", "menumax", "srch"]) + $lackrecomand);
+        return view("admin.menu.update.main", compact(["rows", "menufoods", "foods", "servedate", "timing", "menumax", "srch", "recipe"]) + $lackrecomand);
     }
 
     // *************************************
@@ -29,13 +30,14 @@ trait MenuTraitUpdate
             "menu.id AS id",
             "menu.name AS name",
             "menu.memo AS memo",
+            "menu.recipe_id AS recipe_id",
         ]);
         $raws = $q->get();
 
         // 最大数まで補完
         $ret = [];
         for ($i = 0; $i < $menumax; $i++) {
-            $ret[] = count($raws) > $i ? $raws[$i] : ["name" => "", "memo" => "", "id" => 0];
+            $ret[] = count($raws) > $i ? $raws[$i] : ["name" => "", "memo" => "", "id" => 0, "recipe_id" => 0];
         }
 
         return $ret;
@@ -154,6 +156,29 @@ trait MenuTraitUpdate
             "food.name AS name"
         ]);
         $ret = $q->get();
+        return $ret;
+    }
+
+    private function upload_loadRecipe() : array
+    {
+        $q = \App\Models\Recipe::query();
+        $q->orderBy("category", "ASC");
+        $q->select([
+            "recipe.id AS id",
+            "recipe.name AS name",
+            \DB::raw((new \App\L\RecipeCategory())->sqlCase("recipe.category", "category")),
+        ]);
+        $rows = $q->get();
+
+        $ret = [
+            [ "id" => 0, "name" => "（レシピ）"],
+        ];
+        foreach($rows as $row) {
+            $ret[] = [
+                "id" => $row["id"],
+                "name" => "{$row['category']} : {$row['name']}"
+            ];
+        }
         return $ret;
     }
 }

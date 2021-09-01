@@ -13,6 +13,7 @@ trait MenuTraitUpdatestore
             $data = $request->all();
             $names = array_key_exists("name", $data) ? $data["name"] : [];
             $memos = array_key_exists("memo", $data) ? $data["memo"] : [];
+            $recipe_ids = array_key_exists("recipe_id", $data) ? $data["recipe_id"] : [];
             $menufoods = array_key_exists("menufood", $data) ? $data["menufood"] : [];
 
             // 日付とタイミングの検証
@@ -23,7 +24,7 @@ trait MenuTraitUpdatestore
             ];
             \Validator::make(compact(["servedate", "timing"]), $val_common)->validate();
 
-            $menu_ids = $this->updatestore_procMenu($servedate, $timing, $names, $memos);
+            $menu_ids = $this->updatestore_procMenu($servedate, $timing, $names, $memos, $recipe_ids);
             $this->updatestore_procMenufood($menu_ids, $menufoods);
 
             return true;
@@ -41,7 +42,7 @@ trait MenuTraitUpdatestore
     // *************************************
     // utils : 衝突を避けるため、action名_メソッド名とすること
     // *************************************
-    private function updatestore_procMenu(string $servedate, string $timing, array $names, array $memos): array
+    private function updatestore_procMenu(string $servedate, string $timing, array $names, array $memos, array $recipe_ids): array
     {
         // まずは該当するメニューを保持。menufoodクリアのため。
         $q_old = \App\Models\Menu::query();
@@ -67,12 +68,14 @@ trait MenuTraitUpdatestore
         foreach ($names as $idx => $name) {
             if ($name && strlen($name) > 0) {
                 $memo = array_key_exists($idx, $memos) ? $memos[$idx] : "";
+                $recipe_id = (array_key_exists($idx, $recipe_ids) && $recipe_ids[$idx] != 0) ? $recipe_ids[$idx] : null;
                 $ent = new \App\Models\Menu();
                 \validator::make(["name" => $name], $val_now)->validate();
                 $ent->name = $name;
                 $ent->memo = $memo;
                 $ent->servedate = $servedate;
                 $ent->timing = $timing;
+                $ent->recipe_id = $recipe_id;
                 $ent->save();
                 $newids[] = $ent->id;
             }

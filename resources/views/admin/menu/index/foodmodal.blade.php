@@ -20,7 +20,22 @@ $id = "{$prefix}{$menu->id}";
                     <?php else : ?>
                         <span id="d-memo-{{ $id }}" class="d-memo">{{ $menu->memo }}</span>
                     <?php endif; ?>
-
+                </div>
+                <div>
+                    <?php if(filter_var($menu->recipe_url, FILTER_VALIDATE_URL)) : // URLなのでリンク ?>
+                        <a href="{{ $menu->recipe_url }}" target="_blank">{{ $menu->recipe_url }}</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <hr />
+            <?php endif; ?>
+            <?php if(strlen($menu->recipe_url) > 0) : ?>
+            <div>
+                <span class="tag">レシピ</span>
+                <div>
+                    <?php if(filter_var($menu->recipe_url, FILTER_VALIDATE_URL)) : // URLなのでリンク ?>
+                        <a href="{{ $menu->recipe_url }}" target="_blank">{{ $menu->recipe_url }}</a>
+                    <?php endif; ?>
                 </div>
             </div>
             <hr />
