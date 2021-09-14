@@ -78,6 +78,8 @@ trait MenuTraitUpdatestore
                 $ent->recipe_id = $recipe_id;
                 $ent->save();
                 $newids[] = $ent->id;
+
+                $this->updatestore_storeRecipe($name, $memo);
             }
         }
 
@@ -107,5 +109,43 @@ trait MenuTraitUpdatestore
                 }
             }
         }
+    }
+
+    private function updatestore_storeRecipe(string $name, string $memo = null): void
+    {
+        // memoがなければ終了
+        if(!$memo) {
+            return;
+        } else if(strlen($memo) <= 0) {
+            return;
+        }
+
+        // urlがurlかを確認
+        if(!\U::isURL($memo)) {
+            return;
+        }
+
+        // 同じURLがなければ登録
+        $q = \App\Models\Recipe::query();
+        $q->where("recipe.url", "=", $memo);
+        if($q->count() > 0) {
+            // 既に存在するので終了
+            return;
+        }
+
+        // 新しくレシピに登録
+        $category = \App\L\RecipeCategory::ID_ETC;
+        $val = \App\Models\Recipe::validaterule();
+        \validator::make([
+            "name" => $name,
+            "url" => $memo,
+            "category" => $category
+        ], $val)->validate();
+        $ent = new \App\Models\Recipe();
+        $ent->name = $name;
+        $ent->url = $memo;
+        $ent->category = $category;
+        $ret = $ent->save();
+        \Log::channel("myerror")->debug($ret);
     }
 }

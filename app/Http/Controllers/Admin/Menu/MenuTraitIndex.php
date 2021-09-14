@@ -12,7 +12,8 @@ trait MenuTraitIndex
         $srch = $this->index_srch($request);
         $rows = $this->index_load($srch);
         $timing = (new \App\L\MenuTiming())->labelObjs();
-        return view("admin.menu.index.main", compact(["rows", "timing", "srch"]));
+        $isPrevilege = $this->index_isPrivilege();
+        return view("admin.menu.index.main", compact(["rows", "timing", "srch", "isPrevilege"]));
     }
 
     // *************************************
@@ -104,6 +105,12 @@ trait MenuTraitIndex
         ]);
         $rows = $q->get();
         $ret = $rows;
+        return $ret;
+    }
+    private function index_isPrivilege()
+    {
+        $user = \Auth::user();
+        $ret = in_array($user->id, [1]);
         return $ret;
     }
 }

@@ -63,6 +63,11 @@ class U {
             })->toArray()
         );
     }
+    public static function isURL(string $url) : bool
+    {
+        $ret = filter_var($url, FILTER_VALIDATE_URL);
+        return $ret !== false; // 失敗した場合はfalseなのでそれ以外であればURL
+    }
     // public static function makeCsvWriterObj()
     // {
     //     $csv = \League\Csv\Writer::createFromStream(fopen("php://temp", "r+"));

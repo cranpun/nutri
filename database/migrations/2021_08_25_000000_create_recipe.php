@@ -22,7 +22,7 @@ class CreateRecipe extends Migration
             $table->timestamps();
         });
         Schema::table('menu', function (Blueprint $table) {
-            $table->unsignedBigInteger("recipe_id")->comment("レシピID")->after("timing");
+            $table->unsignedBigInteger("recipe_id")->comment("レシピID")->after("timing")->nullable()->unique();
         });
     }
 

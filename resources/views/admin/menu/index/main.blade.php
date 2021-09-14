@@ -22,7 +22,7 @@ use \App\Http\Controllers\Admin\Menu\MenuController;
 
 @section("main")
 <div>
-    @include("admin.menu.index.filter", compact(["srch"]))
+    @include("admin.menu.index.filter", compact(["srch", "isPrevilege"]))
 </div>
 
 <?php
@@ -40,16 +40,28 @@ $today = \Carbon\Carbon::today()->format("Y-m-d");
     <tbody>
         <tr id="row-today" class="">
             <td id="d-lunch-today" class="d-lunch">
-                <?php foreach($rows[$today][\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
-                    @include("admin.menu.index.foodmodal", ["menu" => $menu, "prefix" => "today"])
-                <?php endforeach; ?>
+                <div class="columns">
+                    <div class="column">
+                        <a href="{{ route('admin-menu-update', ['servedate' => $today, 'timing' => \App\L\MenuTiming::ID_LUNCH] + $srch) }}" id="act-update-today-{{ \App\L\MenuTiming::ID_LUNCH }}" class="button is-small">編集</a>
+                    </div>
+                    <div class="column is-11">
+                        <?php foreach($rows[$today][\App\L\MenuTiming::ID_LUNCH] as $menu): ?>
+                            @include("admin.menu.index.foodmodal", ["menu" => $menu, "prefix" => "today"])
+                        <?php endforeach; ?>
+                    </div>
+                        </div>
             </td>
             <td id="d-dinner-today" class="d-dinner">
-            <ul>
-                <?php foreach($rows[$today][\App\L\MenuTiming::ID_DINNER] as $menu): ?>
-                    @include("admin.menu.index.foodmodal", ["menu" => $menu, "prefix" => "today"])
-                <?php endforeach; ?>
-                </ul>
+                <div class="columns">
+                    <div class="column">
+                        <a href="{{ route('admin-menu-update', ['servedate' => $today, 'timing' => \App\L\MenuTiming::ID_DINNER] + $srch) }}" id="act-update-today-{{ \App\L\MenuTiming::ID_DINNER }}" class="button is-small">編集</a>
+                    </div>
+                    <div class="column is-11">
+                        <?php foreach($rows[$today][\App\L\MenuTiming::ID_DINNER] as $menu): ?>
+                            @include("admin.menu.index.foodmodal", ["menu" => $menu, "prefix" => "today"])
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             </td>
         </tr>
     </tbody>
