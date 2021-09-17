@@ -45,7 +45,7 @@
             <td id="d-category-<?= $id ?>" class="d-category val">{{ $row["category"] }}</td>
             <td id="d-name-<?= $id ?>" class="d-name val"><?= $row["name"] ?></td>
             <td id="d-url-<?= $id ?>" class="d-url val">
-                <a href="{{ $row['url'] }}">link</a>
+                <a href="{{ $row['url'] }}" target="_blank">link</a>
             </td>
             <td id="d-memo-<?= $id ?>" class="d-memo val"><?= nl2br($row["memo"]) ?></td>
         </tr>
