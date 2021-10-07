@@ -31,9 +31,9 @@ trait FoodTraitUpdatestore
             $val = \App\Models\Food::validaterule();
             \Validator::make($data, $val)->validate();
 
-            $row = \App\Models\Food::where("id", "=", $food_id)->get()->toArray()[0];
+            $row = \App\Models\Food::where("id", "=", $food_id)->first();
             $row->name = $name;
-            $row->kana = array_key_exists("kana", $data) ? $data["kana"] : "";
+            $row->kana = array_key_exists("kana", $data) ? mb_convert_kana($data["kana"], "c") : "";
             $row->category = $data["category"];
             $row->favorite = $data["favorite"];
 

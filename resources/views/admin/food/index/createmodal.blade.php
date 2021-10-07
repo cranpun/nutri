@@ -14,7 +14,8 @@ $posturl = route('admin-food-createstore');
                 <form name="form-{{ $modalaction }}" id="form-{{ $modalaction }}" method="POST" action="{{ $posturl }}" class="">
                     @csrf
                     <x-myinput field="name" label="名前" type="text" defval="" placeholder="" />
-                    <x-myinput field="kana" label="かな" type="text" defval="" placeholder="ひらがな" />
+                    <x-myinput field="kana" label="かな（ひらがな）" type="text" defval="" placeholder="ひらがな" />
+                    <x-myselect field="category" label="カテゴリ" :options="(new \App\L\FoodCategory())->labelObjs()" defval="" :enablefilter='false' />
                     <fieldset class="field">
                         <button type="submit" id="act-{{ $modalaction }}" class="button">登録</button>
                     </fieldset>
