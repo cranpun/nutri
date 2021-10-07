@@ -8,7 +8,6 @@ use \App\Http\Controllers\Admin\Menu\MenuController;
 $modalaction = "index";
 $posturl = route('admin-menu-index');
 ?>
- <section class="mb-3">
     <a class="button" id="act-{{ $modalaction }}-open" onclick="document.querySelector('#modal-{{ $modalaction }}').classList.add('is-active');">フィルター</a>
     <div id="modal-{{ $modalaction }}" class="modal">
         <div class="modal-background" onclick="document.querySelector('#modal-{{ $modalaction }}').classList.remove('is-active')"></div>
@@ -25,10 +24,4 @@ $posturl = route('admin-menu-index');
         </div>
         <button class="modal-close" onclick="document.querySelector('#modal-{{ $modalaction }}').classList.remove('is-active')">閉じる</button>
     </div>
-    <?php if($isPrevilege) : ?>
-    <form id="form-deflunchstore" method="POST" action="{{ route('admin-menu-deflunchstore', $srch) }}" style="display: inline;">
-        @csrf
-        <button type="submit" id="act-deflunchstore" class="button">SDL</button>
-    </form>
-    <?php endif; ?>
-</section>
+

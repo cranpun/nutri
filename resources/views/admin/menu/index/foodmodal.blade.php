@@ -1,12 +1,14 @@
 <?php
 $id = "{$prefix}{$menu->id}";
 ?>
+<li>
 <a 
     id="d-menu-{{ $id }}" 
     class="d-menu val"
     style="display: block"
     onclick="document.querySelector('#modal-menu-{{ $id }}').classList.add('is-active');"
 >{{ $menu->name }}</a>
+</li>
 <div id="modal-menu-{{ $id }}" class="modal">
     <div class="modal-background" onclick="document.querySelector('#modal-menu-{{ $id }}').classList.remove('is-active')"></div>
     <div class="modal-content">

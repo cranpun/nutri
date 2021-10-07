@@ -10,8 +10,10 @@
         @include("admin.menu.index.swap", ['servedate' => $servedate, 'timing' => $timing, 'srch' => $srch, 'dir' => 'down'])
     </div>
     <div class="column is-11">
+        <ul style="list-style: disc">
         <?php foreach($menus as $menu): ?>
         @include("admin.menu.index.foodmodal", ["menu" => $menu, "prefix" => ""])
         <?php endforeach; ?>
+        </li>
     </div>
 </div>
