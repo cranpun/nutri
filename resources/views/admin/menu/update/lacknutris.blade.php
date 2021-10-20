@@ -3,6 +3,9 @@
  *
  */
 ?>
+<?php if(count($lacknutris) <= 0) : ?>
+<span id="label-fullnutri">（なし）</span>
+<?php endif; ?>
 <?php foreach($lacknutris as $lacknutri) : $id = $lacknutri["id"]; ?>
     <a class="button is-small" id="act-lacknutri-open-{{ $id }}{" onclick="document.querySelector('#modal-lacknutri-{{ $id }}').classList.add('is-active');">
         {{ $lacknutri["name"] }}
