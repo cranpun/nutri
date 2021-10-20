@@ -37,7 +37,7 @@ trait MenuTraitSwapstore
     // *************************************
     private function swapstore_dirdate(string $servedate, string $dir) : string
     {
-        if ($dir == "up") {
+        if ($dir == "next") {
             // 次の日とswap
             return \Carbon\Carbon::parse($servedate)->addDays(1)->format("Y-m-d");
         } else /* if($dir == "down") */ {
