@@ -1,7 +1,7 @@
 <?php
 $id = "{$prefix}{$menu->id}";
 ?>
-<li>
+<li style="margin-left: 12px;">
 <a 
     id="d-menu-{{ $id }}" 
     class="d-menu val"
