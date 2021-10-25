@@ -19,7 +19,7 @@
     @include("admin.menu.update.lacknutris", ["lacknutris" => $lacknutris])
     <hr />
 </section>
-<form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing']) + $srch) }}" style="position: relative;">
+<form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing']) + $srch) }}" style="position: relative; overflow-x: scroll;">
     @csrf
 
     <table id="lunchtable" class="table is-fullwidth is-narrow is-bordered is-striped" style="table-layout: fixed">
