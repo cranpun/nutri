@@ -13,7 +13,7 @@
         <nav class="navbar has-background-primary-light" role="navigation">
             <section class="navbar-brand">
                 <a class="navbar-item" href="{{ url('/') }}">
-                    <img src="nutri.svg" style="height: 100%">
+                    <img src="{{ url('nutri.svg') }}" style="height: 100%">
                 </a>
                 <a id="burger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
                     data-target="navbar-topnav">
