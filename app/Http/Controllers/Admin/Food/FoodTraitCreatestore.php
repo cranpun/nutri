@@ -21,7 +21,7 @@ trait FoodTraitCreatestore
 
         $row->name = $data["name"];
         $row->kana = mb_convert_kana($data["kana"], "c");
-        $row->category = \App\L\FoodCategory::ID_ETC;
+        $row->category = $data["category"];
         $row->favorite = 100;
 
         if(!$row->save()) {

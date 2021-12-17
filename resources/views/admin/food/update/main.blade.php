@@ -12,7 +12,7 @@
 @endsection
 
 @section("main")
-<form class="container" method="POST" action="{{ route('admin-food-updatestore', ['food_id' => $row['id']]) }}">
+<form class="container" method="POST" action="{{ route('admin-food-updatestore', ['food_id' => $row['id']]) }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id" value="{{ $row['id'] }}">
     <x-mycheckbox field="favorite" label="お気に入り" :defval="old('favorite', $row['favorite'] == 0)" />
