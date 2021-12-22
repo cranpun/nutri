@@ -18,7 +18,7 @@
     <x-myinput field="name" label="名前" type="text" :defval="old('name', $row['name'])" placeholder="" />
     <x-myselect field="category" label="カテゴリ" :options="$category" :defval="old('category', $row['category'])" :enablefilter='false' />
     <x-myinput field="url" label="URL" type="text" :defval="old('url', $row['url'])" placeholder="" />
-    <x-mytextarea field="memo" label="memo" :defval="old('memo', $row['memo'])" placeholder="" />
+    <x-mytextarea field="memo" label="memo" :defval="old('memo', $row['memo'] ?? '')" placeholder="" />
 
     <div class="field">
         <div class="control">

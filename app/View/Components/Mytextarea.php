@@ -10,8 +10,6 @@ class Mytextarea extends Component
     public string $cssid;
     public string $errorfield;
     public string $label;
-    public string $type;
-    public string $placeholder;
     public string $defval;
 
     /**

@@ -16,9 +16,9 @@ trait RecipeTraitUpdatestore
             $val = \App\Models\Recipe::validaterule();
             \Validator::make($data, $val)->validate();
 
-            $row = \App\Models\Recipe::where("id", "=", $recipe_id)->get()->toArray()[0];
-            $row->name = $row["name"];
-            $row->category = $row["category"];
+            $row = \App\Models\Recipe::where("id", "=", $recipe_id)->first();
+            $row->name = $data["name"];
+            $row->category = $data["category"];
             $row->url = $data["url"];
             $row->memo = $data["memo"];
 
