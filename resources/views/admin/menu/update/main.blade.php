@@ -30,11 +30,11 @@
                 <th style="width: 50px;">カテゴリ</th>
                 <?php foreach($rows as $idx => $row) : ?>
                 <td id="d-name-{{ $idx }}" class="d-name" style="width: 80px;">
-                    <input type="text" name="name[{{$idx}}]" id="name_{{$idx}}" value='{{ old("name[{$idx}]", $row["name"]) }}' style="width: 100%" placeholder="メニュー名"><br/>
-                    <input type="text" name="memo[{{$idx}}]" id="memo_{{$idx}}" value='{{ old("memo[{$idx}]", $row["memo"]) }}' style="width: 100%" placeholder="メモ：URL等">
+                    <input type="text" name="name[{{$idx}}]" id="name_{{$idx}}" value='{{ old("name[{$idx}]", $row["name"]) }}' style="width: 100%" placeholder="メニュー名" tabindex={{ ($idx + 1) }}><br/>
+                    <input type="text" name="memo[{{$idx}}]" id="memo_{{$idx}}" value='{{ old("memo[{$idx}]", $row["memo"]) }}' style="width: 100%" placeholder="メモ：URL等" tabindex={{ ($idx + 1) * 10 }}>
                     <div>
                         <?php $field = "recipe_id_{$idx}"; ?>
-                        <select name="recipe_id[{{ $idx }}]" id="{{ $field }}" style="width: 100%;">
+                        <select name="recipe_id[{{ $idx }}]" id="{{ $field }}" style="width: 100%;"  tabindex={{ ($idx + 1) * 100 }}>
                             @foreach ($recipe as $option)
                             <option value="{{ $option['id'] }}" <?= $row["recipe_id"] == $option["id"] ? " selected " : "" ?>>{{ $option['name'] }}</option>
                             @endforeach
@@ -42,7 +42,7 @@
                     </div>
                     <div>
                         <div>
-                            <input type="text" id="{{ $field }}-filter" placeholder="レシピフィルタ" style="width: 100%;">
+                            <input type="text" id="{{ $field }}-filter" placeholder="レシピフィルタ" style="width: 100%;"  tabindex={{ ($idx + 1) * 1000 }}>
                         </div>
                         <script type="text/javascript">
                         let options_{{ $field }};
