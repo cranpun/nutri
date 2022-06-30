@@ -87,7 +87,9 @@
                 <th class="nowrap">{{ (new \App\L\FoodCategory())->label($food->category) }}</th>
                 <?php foreach($rows as $idx => $row) : ?>
                     <td id="d-menufood-{{ $food->id }}" class="d-menufood has-text-centered">
+                        <label for='{{ "menufood_{$idx}_{$food->id}" }}' style="display: block;">
                         <input type="checkbox" name='{{ "menufood[{$idx}][{$food->id}]" }}' id='{{ "menufood_{$idx}_{$food->id}" }}' {{ $menufoods[$idx][$food->id] ? " checked " : "" }} >
+                        </label>
                     </td>
                 <?php endforeach; ?>
             </tr>
