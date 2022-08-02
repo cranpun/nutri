@@ -6,6 +6,7 @@
 <div class="columns">
     <div class="column">
         <a href="{{ route('admin-menu-update', ['servedate' => $servedate, 'timing' => $timing] + $srch) }}" id="act-update-{{ $servedate }}-{{ $timing }}" class="button is-small">編集</a>
+        <hr style="margin: 1rem 0" />
         @include("admin.menu.index.swap", ['servedate' => $servedate, 'timing' => $timing, 'srch' => $srch, 'dir' => 'prev'])
         @include("admin.menu.index.swap", ['servedate' => $servedate, 'timing' => $timing, 'srch' => $srch, 'dir' => 'next'])
     </div>
