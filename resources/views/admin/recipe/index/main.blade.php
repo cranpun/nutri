@@ -14,7 +14,9 @@
 @section("main")
 <section class="mb-3">
     @include("admin.recipe.index.createmodal")
+    @include("admin.recipe.index.filter", compact(["srch", "category"]))
 </section>
+
 <div class="has-text-right">
     <span class="tag">{{ number_format(count($rows)) }}</span>
 </div>
@@ -42,7 +44,7 @@
                 </span>
             </td>
             <td id="d-id-<?= $id ?>" class="d-id val"><?= $row["id"] ?></td>
-            <td id="d-category-<?= $id ?>" class="d-category val">{{ $row["category"] }}</td>
+            <td id="d-category-<?= $id ?>" class="d-category val nowrap">{{ $row["category"] }}</td>
             <td id="d-name-<?= $id ?>" class="d-name val"><?= $row["name"] ?></td>
             <td id="d-url-<?= $id ?>" class="d-url val">
                 <a href="{{ $row['url'] }}" target="_blank">link</a>

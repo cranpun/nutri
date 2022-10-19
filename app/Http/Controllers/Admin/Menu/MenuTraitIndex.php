@@ -43,6 +43,7 @@ trait MenuTraitIndex
             "menu.servedate AS servedate",
             "menu.timing AS timing",
             "recipe.url AS recipe_url",
+            "recipe.memo AS recipe_memo",
         ]);
         $q->leftJoin("recipe", "recipe.id", "=", "menu.recipe_id");
         $q->whereBetween("menu.servedate", [$srch[self::$index_NAME_SDATE], $srch[self::$index_NAME_EDATE]]);

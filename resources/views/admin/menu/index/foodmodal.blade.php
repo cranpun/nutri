@@ -31,7 +31,7 @@ $id = "{$prefix}{$menu->id}";
             </div>
             <hr />
             <?php endif; ?>
-            <?php if(strlen($menu->recipe_url) > 0) : ?>
+            <?php if((strlen($menu->recipe_url) > 0) || strlen($menu->recipe_memo) > 0) : ?>
             <div>
                 <span class="tag">レシピ</span>
                 <div>
@@ -39,6 +39,7 @@ $id = "{$prefix}{$menu->id}";
                         <a href="{{ $menu->recipe_url }}" target="_blank">{{ $menu->recipe_url }}</a>
                     <?php endif; ?>
                 </div>
+                <div>{{ $menu->recipe_memo }}</div>
             </div>
             <hr />
             <?php endif; ?>

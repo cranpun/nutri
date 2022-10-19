@@ -12,14 +12,14 @@ class Myinput extends Component
     public string $label;
     public string $type;
     public string $placeholder;
-    public string $defval;
+    public string | null $defval;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $field, string $label, string $type, string $defval, string $placeholder)
+    public function __construct(string $field, string $label, string $type, string | null $defval, string $placeholder)
     {
         $this->field = $field;
         $this->cssid = \U::safeArrayname($field, "_");

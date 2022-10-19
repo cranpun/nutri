@@ -10,14 +10,14 @@ class Mytextarea extends Component
     public string $cssid;
     public string $errorfield;
     public string $label;
-    public string $defval;
+    public string | null $defval;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $field, string $label, string $defval)
+    public function __construct(string $field, string $label, string | null $defval)
     {
         $this->field = $field;
         $this->cssid = \U::safeArrayname($field, "_");
