@@ -15,7 +15,7 @@ $posturl = route('admin-recipe-createstore');
                 <x-myinput field="name" label="名前" type="text" defval="" placeholder="" />
                 <x-myselect field="category" label="カテゴリ" :options="$category" defval="" :enablefilter='false' />
                 <x-myinput field="url" label="URL" type="text" defval="" placeholder="" />
-                <x-mytextarea field="url" label="メモ" defval="" />
+                <x-mytextarea field="memo" label="メモ" defval="" />
                 <fieldset class="field">
                     <button type="submit" id="act-{{ $modalaction }}" class="button">登録</button>
                 </fieldset>

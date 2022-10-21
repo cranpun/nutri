@@ -18,7 +18,7 @@ trait RecipeTraitIndex
             "recipe.memo AS memo",
         ]);
         $q->where("recipe.category", "=", $srch[self::$index_NAME_CATEGORY]);
-        $q->orderBy("recipe.category", "ASC");
+        $q->orderBy("recipe.name", "ASC");
         $rows = $q->get();
         $category = (new \App\L\RecipeCategory())->labelObjs();
         return view("admin.recipe.index.main", compact(["rows", "category", "srch"]));
