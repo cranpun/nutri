@@ -162,11 +162,13 @@ trait MenuTraitUpdate
     private function upload_loadRecipe() : array
     {
         $q = \App\Models\Recipe::query();
-        $q->orderBy("category", "ASC");
+        $q->orderBy("raw_cat", "DESC");
+        $q->orderBy("name", "ASC");
         $q->select([
             "recipe.id AS id",
             "recipe.name AS name",
             \DB::raw((new \App\L\RecipeCategory())->sqlCase("recipe.category", "category")),
+            \DB::raw("category AS raw_cat"),
         ]);
         $rows = $q->get();
 
