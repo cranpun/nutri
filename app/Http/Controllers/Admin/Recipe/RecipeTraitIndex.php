@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 trait RecipeTraitIndex
 {
     public static string $index_NAME_CATEGORY = "name-category";
+    public static string $index_NAME_NAME = "name-name";
     public function index(Request $request) : \Illuminate\View\View
     {
         $srch = $this->index_srch($request);
@@ -17,10 +18,15 @@ trait RecipeTraitIndex
             "recipe.url AS url",
             "recipe.memo AS memo",
         ]);
-        $q->where("recipe.category", "=", $srch[self::$index_NAME_CATEGORY]);
+        if($srch[self::$index_NAME_CATEGORY] != \App\L\RecipeCategory::ID_ALL) {
+            $q->where("recipe.category", "=", $srch[self::$index_NAME_CATEGORY]);
+        }
+        if($srch[self::$index_NAME_NAME] != "") {
+            $q->where("recipe.name", "LIKE", "%{$srch[self::$index_NAME_NAME]}%");
+        }
         $q->orderBy("recipe.name", "ASC");
         $rows = $q->get();
-        $category = (new \App\L\RecipeCategory())->labelObjs();
+        $category = (new \App\L\RecipeCategory())->labelObjsAll();
         return view("admin.recipe.index.main", compact(["rows", "category", "srch"]));
     }
 
@@ -31,6 +37,7 @@ trait RecipeTraitIndex
     {
         return [
             self::$index_NAME_CATEGORY => $request->query(self::$index_NAME_CATEGORY, \App\L\RecipeCategory::ID_ETC),
+            self::$index_NAME_NAME => $request->query(self::$index_NAME_NAME, ""),
         ];
     }
 }

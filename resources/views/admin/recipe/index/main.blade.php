@@ -1,3 +1,7 @@
+<?php
+use \App\Http\Controllers\Admin\Recipe\RecipeController;
+?>
+
 @extends("admin.base")
 
 @section("title")
@@ -9,6 +13,7 @@
 @endsection
 
 @section("labelsubtitle")
+{{ (new \App\L\RecipeCategory())->label($srch[RecipeController::$index_NAME_CATEGORY]) }}
 @endsection
 
 @section("main")

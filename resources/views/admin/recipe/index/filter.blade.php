@@ -15,7 +15,7 @@ $posturl = route('admin-recipe-index');
             <div class="box">
                 <form name="form-{{ $modalaction }}" id="form-{{ $modalaction }}" method="GET" action="{{ $posturl }}" class="">
                     <x-myselect :field="RecipeController::$index_NAME_CATEGORY" label="カテゴリ" :options="$category" :defval="$srch[RecipeController::$index_NAME_CATEGORY]" :enablefilter='false' />
-
+                    <x-myinput :field="RecipeController::$index_NAME_NAME" label="名前" type="text" :defval="$srch[RecipeController::$index_NAME_NAME]" placeholder="" />
 
                     <fieldset class="field">
                         <button type="submit" id="act-{{ $modalaction }}" class="button">読み込み</button>
