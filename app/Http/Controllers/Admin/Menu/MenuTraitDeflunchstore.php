@@ -16,11 +16,11 @@ trait MenuTraitDeflunchstore
             $period = \Carbon\CarbonPeriod::create($sdate, $edate)->toArray();
             $names = [
                 "スパ",
-                "そば",
                 "ごはん",
+                "そば",
                 "スパ",
-                "そば",
                 "ごはん",
+                "そば",
                 "やきそば",
             ];
 
