@@ -146,6 +146,6 @@ trait MenuTraitUpdatestore
         $ent->url = $memo;
         $ent->category = $category;
         $ret = $ent->save();
-        \Log::channel("myerror")->debug($ret);
+        //\Log::channel("myerror")->debug($ret);
     }
 }
