@@ -20,7 +20,7 @@ $id = "{$prefix}{$menu->id}";
                     <?php if(filter_var($menu->memo, FILTER_VALIDATE_URL)) : // URLなのでリンク ?>
                         <a href="{{ $menu->memo }}" target="_blank">{{ $menu->memo }}</a>
                     <?php else : ?>
-                        <span id="d-memo-{{ $id }}" class="d-memo">{{ $menu->memo }}</span>
+                        <span id="d-memo-{{ $id }}" class="d-memo">{!! nl2br(e($menu->memo)) !!}</span>
                     <?php endif; ?>
                 </div>
                 <div>
@@ -39,7 +39,7 @@ $id = "{$prefix}{$menu->id}";
                         <a href="{{ $menu->recipe_url }}" target="_blank">{{ $menu->recipe_url }}</a>
                     <?php endif; ?>
                 </div>
-                <div>{{ $menu->recipe_memo }}</div>
+                <div>{!! nl2br(e($menu->recipe_memo)) !!}</div>
             </div>
             <hr />
             <?php endif; ?>

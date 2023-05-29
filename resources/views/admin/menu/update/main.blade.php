@@ -82,7 +82,7 @@
         <tbody>
             <?php foreach($foods as $food) : ?>
             <tr class="{{ $food->bgcolor }}">
-                <th class="">{{ mb_substr($food->kana, 0, 1) }}</th>
+                <th class="">{{ $food["capital"] }}</th>
                 <th class="">{{ in_array($food->id, $recomandfoods) ? "★" : "　"  }}{{ $food->name }}</th>
                 <th class="nowrap">{{ (new \App\L\FoodCategory())->label($food->category) }}</th>
                 <?php foreach($rows as $idx => $row) : ?>

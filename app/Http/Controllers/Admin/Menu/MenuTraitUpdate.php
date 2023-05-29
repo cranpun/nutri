@@ -71,9 +71,17 @@ trait MenuTraitUpdate
         $q->orderBy("kana", "ASC");
         $raws = $q->get();
         $ret = [];
+        $pre = "";
         // 背景色の設定
         foreach($raws as $raw) {
             $raw["bgcolor"] = $this->update_favoritecolor($raw["favorite"]);
+            $capital = mb_substr($raw->kana, 0, 1);
+            $half = mb_substr(mb_convert_kana(mb_convert_kana(mb_convert_kana($capital, 'C'), 'k'), 'K'), 0, 1);
+            if($pre != $half) {
+                $raw["capital"] = $half;
+                $pre = $half;
+            }
+
             $ret[] = $raw;
         }
         return $ret;
