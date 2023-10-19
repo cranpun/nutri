@@ -13,7 +13,11 @@ trait RecipeTraitCreatestore
         $data = $request->all();
         try {
             $val = \App\Models\Recipe::validaterule();
-            \Validator::make($data, $val)->validate();
+            // \Validator::make($data, $val)->validate();
+            $vlm = \Validator::make($data, $val);
+            if($vlm->fails()) {
+                return back()->withInput()->with("message-error", "データ形式が不正です。" . join(" ", $vlm->message()->all()));
+            }
 
         $row->name = $data["name"];
         $row->category = $data["category"];
@@ -26,7 +30,7 @@ trait RecipeTraitCreatestore
         }
         return redirect()->route("admin-recipe-index")->with("message-success", "更新しました。");
         } catch (\Exception $e) {
-            return redirect()->route("admin-recipe-index")->with("message-error", "データの形式が間違っています");
+            return redirect()->route("admin-recipe-index")->with("message-error", "データの形式が間違っています" . $e->getMessage());
         }
     }
 

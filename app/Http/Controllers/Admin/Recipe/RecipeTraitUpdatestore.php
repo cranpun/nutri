@@ -14,7 +14,11 @@ trait RecipeTraitUpdatestore
 
             // 入力値の検証
             $val = \App\Models\Recipe::validaterule();
-            \Validator::make($data, $val)->validate();
+            // \Validator::make($data, $val)->validate();
+            $vlm = \Validator::make($data, $val);
+            if($vlm->fails()) {
+                return back()->withInput()->with("message-error", "データ形式が不正です。" . join(" ", $vlm->message()->all()));
+            }
 
             $row = \App\Models\Recipe::where("id", "=", $recipe_id)->first();
             $row->name = $data["name"];
