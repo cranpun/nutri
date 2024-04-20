@@ -8,8 +8,11 @@ trait MenuTraitDeflunchstore
 {
     public function deflunchstore(\Illuminate\Http\Request $request) : ?\Illuminate\Http\RedirectResponse
     {
+        $sdate = $this->deflunchstore_loadLastlunchdate();
+
         // 複数回の変更があるためtransaction
         $trans = \DB::transaction(function () use ($request) {
+            return true;
             // 設定すべき月曜日
             $sdate = $this->deflunchstore_loadLastlunchdate();
             $edate = (new \Carbon\Carbon($sdate))->addDays(6)->format("Y-m-d");
@@ -54,8 +57,8 @@ trait MenuTraitDeflunchstore
         $lastrow = $lastq->first();
 
         $lastdate = $lastrow->servedate;
-        // 最後の日の次の日が含まれる週の月曜日
-        $ret = (new \Carbon\Carbon($lastdate))->addDays(1)->startOfWeek()->format("Y-m-d");
+        // 最後の日の次の日が含まれる週の月曜日。startOfWeekが日曜日なので+1
+        $ret = (new \Carbon\Carbon($lastdate))->addDays(1)->startOfWeek()->addDays(1)->format("Y-m-d");
         return $ret;
     }
 }
