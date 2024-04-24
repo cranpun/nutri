@@ -27,6 +27,7 @@ Route::middleware(["can:admin","auth"])->group(function () {
     Route::post("/food/delete/{food_id}", [FoodController::class, "delete"])->name("admin-food-delete");
     Route::get("/food/index", [FoodController::class, "index"])->name("admin-food-index");
     Route::get("/food/update/{food_id}", [FoodController::class, "update"])->name("admin-food-update");
+    Route::get("/food/detail/{food_id}", [FoodController::class, "detail"])->name("admin-food-detail");
     Route::post("/food/updatestore/{food_id}", [FoodController::class, "updatestore"])->name("admin-food-updatestore");
     Route::get("/food/shoppingnote", [FoodController::class, "shoppingnote"])->name("admin-food-shoppingnote");
 
