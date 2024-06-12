@@ -14,6 +14,7 @@ class MenuController extends \App\Http\Controllers\Controller
     // *********************************************************
     use \App\Http\Controllers\Admin\Menu\MenuTraitDelete;
     use \App\Http\Controllers\Admin\Menu\MenuTraitIndex; // swap, updateでindexのメソッドを使うのでそれより上にすること。
+    use \App\Http\Controllers\Admin\Menu\MenuTraitMovestore;
     use \App\Http\Controllers\Admin\Menu\MenuTraitUpdate;
     use \App\Http\Controllers\Admin\Menu\MenuTraitUpdatestore;
     use \App\Http\Controllers\Admin\Menu\MenuTraitSwapstore;

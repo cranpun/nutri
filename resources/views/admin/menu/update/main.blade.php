@@ -18,6 +18,7 @@
     <h4>不足栄養素</h4>
     @include("admin.menu.update.lacknutris", ["lacknutris" => $lacknutris])
     <hr />
+    @include("admin.menu.update.modal_move", compact(["servedate", "timing"]))
 </section>
 <form class="container" method="POST" action="{{ route('admin-menu-updatestore', compact(['servedate', 'timing']) + $srch) }}" style="position: relative; overflow-x: scroll;">
     @csrf
