@@ -17,13 +17,13 @@ trait MenuTraitDeflunchstore
             $edate = (new \Carbon\Carbon($sdate))->addDays(6)->format("Y-m-d");
             $period = \Carbon\CarbonPeriod::create($sdate, $edate)->toArray();
             $names = [
-                "スパ",
-                "ごはん",
                 "そば",
                 "スパ",
-                "ごはん",
+                "焼きそば",
+                "スパ",
                 "そば",
-                "やきそば",
+                "スパor自由",
+                "焼きそば",
             ];
 
             foreach($period as $idx => $date) {
