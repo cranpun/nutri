@@ -7,21 +7,15 @@ trait MenuTraitMovestore
     public function movestore(\Illuminate\Http\Request $request, string $servedate, string $timing)
     {
         $movedate = $request->input("movedate", $servedate);
-        $rows = $this->movestore_loadMenus($servedate, $timing);
 
-        // 複数回の変更があるためtransaction
-        $trans = \DB::transaction(function () use ($rows, $movedate) {
-            foreach($rows as $row) {
-                $row->servedate = $movedate;
-                $row->save();
-            }
+        $trans = \DB::transaction(function () use ($servedate, $movedate, $timing) {
+            $this->swapdate($servedate, $movedate, $timing);
 
             return true;
         });
 
         if ($trans) {
-            $cnt = count($rows);
-            return redirect()->to(route("admin-menu-index") . "#row-{$movedate}")->with("message-success", "{$movedate}に{$cnt}個、移動しました。");
+            return redirect()->to(route("admin-menu-index") . "#row-{$movedate}")->with("message-success", "{$servedate}と{$movedate}を入れ替えました。");
         } else {
             \U::invokeErrorValidate($request, "保存に失敗しました。");
             return null;

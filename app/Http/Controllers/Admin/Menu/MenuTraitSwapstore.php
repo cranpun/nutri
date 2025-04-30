@@ -11,14 +11,7 @@ trait MenuTraitSwapstore
         // 複数回の変更があるためtransaction
         $swapdate = $this->swapstore_dirdate($servedate, $dir);
         $trans = \DB::transaction(function () use ($servedate, $timing, $swapdate) {
-
-            $serveids = $this->swapstore_loadids($servedate, $timing);
-            $swapids = $this->swapstore_loadids($swapdate, $timing);
-
-            // idを指定して日付を入れ替え
-            $this->swapstore_swap($servedate, $swapids);
-            $this->swapstore_swap($swapdate, $serveids);
-
+            $this->swapdate($servedate, $swapdate, $timing);
             return true;
         });
 
@@ -44,22 +37,5 @@ trait MenuTraitSwapstore
             // 前の日とswap
             return \Carbon\Carbon::parse($servedate)->addDays(-1)->format("Y-m-d");
         }
-    }
-
-    private function swapstore_loadids(string $servedate, string $timing) : array
-    {
-        $q = \App\Models\Menu::query();
-        $q->where("servedate", "=", $servedate);
-        $q->where("timing", "=", $timing);
-        $rows = $q->get()->toArray();
-        $ret = array_column($rows, "id");
-        return $ret;
-    }
-
-    private function swapstore_swap(string $servedate, array $ids) : void
-    {
-        $q = \App\Models\Menu::query();
-        $q->whereIn("id", $ids);
-        $q->update(compact(["servedate"]));
     }
 }
