@@ -25,7 +25,7 @@ trait MenuTraitIndex
      */
     public function index_srch(Request $request) : array
     {
-        $range = 14; // 初期範囲。本日より未来。
+        $range = 21; // 初期範囲。本日より未来。
         $srch = [
             self::$index_NAME_SDATE => $request->query(self::$index_NAME_SDATE, \Carbon\Carbon::today()->format("Y-m-d")),
             self::$index_NAME_EDATE => $request->query(self::$index_NAME_EDATE, \Carbon\Carbon::today()->addDays(intval($range * 1))->format("Y-m-d")),
