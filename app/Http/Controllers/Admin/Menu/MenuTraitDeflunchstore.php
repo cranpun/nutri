@@ -19,11 +19,11 @@ trait MenuTraitDeflunchstore
             $names = [
                 "そば",
                 "スパ",
-                "焼きそば",
+                "お好み焼き",
                 "スパ",
                 "そば",
-                "スパor自由",
-                "焼きそば",
+                "サンド/スパ/その他",
+                "焼きそば/タンメン",
             ];
 
             foreach($period as $idx => $date) {
